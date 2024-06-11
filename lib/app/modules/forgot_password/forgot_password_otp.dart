@@ -159,7 +159,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                       height: 48,
                       onTap: () {
                         // NavigationServices(context).gotoTabScreen();
-                        // Navigator.pushNamed(context, "/signInScreen");
+                        Navigator.pushNamed(context, "/preferenceScreen");
                       },
                     ),
                     Expanded(flex: 7, child: Container()),

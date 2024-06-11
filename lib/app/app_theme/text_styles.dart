@@ -59,5 +59,9 @@ class TextStyles{
         decoration: TextDecoration.underline,decorationColor: const Color(0xFF2CBFD3)));
   }
 
+  TextStyle googleRubikFontsForText3({double ?fontSize , FontWeight? fontWeight}){
+    return GoogleFonts.rubik(textStyle: TextStyle(fontWeight: fontWeight??FontWeight.w500,fontSize: fontSize??16,color: const Color(0xFF2CBFD3),decorationColor: const Color(0xFF2CBFD3)));
+  }
+
 
 }

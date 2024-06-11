@@ -39,6 +39,8 @@ dependencies:
   google_fonts:
   sms_autofill:
   pin_input_text_field:
+  percent_indicator:
+  numberpicker:
 
 dev_dependencies:
   flutter_test:
