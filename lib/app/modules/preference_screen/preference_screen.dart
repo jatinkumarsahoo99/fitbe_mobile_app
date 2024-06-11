@@ -149,9 +149,6 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                     child: ListView.builder(
                       itemCount: 100,
 
-
-
-
                         itemBuilder: (BuildContext context , int index){
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
