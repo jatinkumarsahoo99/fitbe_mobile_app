@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../app_theme/app_themes.dart';
 import '../app_theme/text_styles.dart';
 
 class CommonTextFieldView extends StatelessWidget {

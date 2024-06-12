@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 class TapEffect extends StatefulWidget {
   const TapEffect(
-      {Key? key,
+      {super.key,
       this.isClickable = true,
       required this.onClick,
-      required this.child})
-      : super(key: key);
+      required this.child});
 
   final bool isClickable;
   final VoidCallback onClick;

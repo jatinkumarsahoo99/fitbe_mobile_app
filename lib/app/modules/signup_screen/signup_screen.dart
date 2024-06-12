@@ -1,9 +1,6 @@
-import 'package:fitbe/app/app_theme/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../../app_theme/app_themes.dart';
 import '../../app_theme/text_styles.dart';
-import '../../common_widgets/common_appbar_view.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_password_text_field.dart';
 import '../../common_widgets/common_text_field_view.dart';
@@ -18,9 +15,9 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  String _errorEmail = '';
+  final String _errorEmail = '';
   final TextEditingController _emailController = TextEditingController();
-  String _errorPassword = '';
+  final String _errorPassword = '';
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _fnameController = TextEditingController();
 

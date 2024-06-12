@@ -2,8 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class RemoveFocuse extends StatelessWidget {
-  const RemoveFocuse({Key? key, required this.child, this.onClick})
-      : super(key: key);
+  const RemoveFocuse({super.key, required this.child, this.onClick});
   final Widget child;
   final VoidCallback? onClick;
 

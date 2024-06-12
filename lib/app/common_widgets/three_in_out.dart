@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 class SpinKitThreeInOut extends StatefulWidget {
   const SpinKitThreeInOut({
-    Key? key,
+    super.key,
     this.color,
     this.size = 50.0,
     this.itemBuilder,
@@ -13,8 +13,7 @@ class SpinKitThreeInOut extends StatefulWidget {
     this.delay = const Duration(milliseconds: 50),
     this.controller,
   })  : assert(!(itemBuilder is IndexedWidgetBuilder && color is Color) && !(itemBuilder == null && color == null),
-            'You should specify either a itemBuilder or a color'),
-        super(key: key);
+            'You should specify either a itemBuilder or a color');
 
   final Color? color;
   final double size;

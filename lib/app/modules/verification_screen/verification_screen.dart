@@ -1,4 +1,3 @@
-import 'package:fitbe/app/app_theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
