@@ -20,27 +20,6 @@ class _GenderScreenState extends State<GenderScreen> {
     return  Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 40,
-        ),
-        Text(
-          "Tell Us About Yourself!",
-          textAlign: TextAlign.center,
-          style: TextStyles(context).googleRubikFontsForHeading(
-              fontSize: 18, fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Text(
-          "For a Tailored Experience, Please Share Your Gender.",
-          textAlign: TextAlign.center,
-          style: TextStyles(context).googleRubikFontsForText(
-              fontSize: 10, fontWeight: FontWeight.w400),
-        ),
-        const SizedBox(
-          height: 32,
-        ),
         GestureDetector(
           onTap: (){
             widget.onTap(1);

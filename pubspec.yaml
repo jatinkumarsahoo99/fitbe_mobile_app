@@ -40,7 +40,8 @@ dependencies:
   sms_autofill:
   pin_input_text_field:
   percent_indicator:
-  numberpicker:
+#  numberpicker:
+#  animated_weight_picker:
 
 dev_dependencies:
   flutter_test:
