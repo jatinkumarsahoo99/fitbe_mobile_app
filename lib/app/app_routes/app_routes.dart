@@ -4,6 +4,7 @@ import '../modules/forgot_password/forgot_password.dart';
 import '../modules/forgot_password/forgot_password_otp.dart';
 import '../modules/intro_screen/intro_screen.dart';
 import '../modules/preference_screen/preference_screen.dart';
+import '../modules/recommendation_screen/recommendation_screen.dart';
 import '../modules/signIn_screen.dart';
 import '../modules/signup_screen/signup_screen.dart';
 import '../modules/splash_screen/splash_screen.dart';
@@ -20,6 +21,7 @@ class AppRoutes{
     "/forgotPassword":(context) => const ForgotPassword(),
     "/forgotPasswordOtp":(context) => const ForgotPasswordOtp(),
     "/preferenceScreen":(context) => const PreferenceScreen(),
+    "/recommendationScreen":(context) => const RecommendationScreen(),
   };
 
 }

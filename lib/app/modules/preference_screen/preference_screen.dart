@@ -211,9 +211,13 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                 radius: 30,
                 height: 48,
                 onTap: () {
-                  pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut);
+                  if((currentShowIndex + 1) < 6) {
+                    pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut);
+                  }else{
+                    Navigator.pushNamed(context, "/recommendationScreen");
+                  }
                   // NavigationServices(context).gotoTabScreen();
                   // Navigator.pushNamed(context, "/preferenceScreen");
                 },

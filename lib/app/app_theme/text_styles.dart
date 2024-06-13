@@ -46,6 +46,10 @@ class TextStyles{
     return GoogleFonts.rubik(textStyle: TextStyle(fontWeight: fontWeight??FontWeight.w600,fontSize: fontSize??20,color: const Color(0xFF808080)));
   }
 
+  TextStyle googleRubikFontsForText4({double ?fontSize , FontWeight? fontWeight}){
+    return GoogleFonts.rubik(textStyle: TextStyle(fontWeight: fontWeight??FontWeight.w600,fontSize: fontSize??20,color: const Color(0xFF040415)));
+  }
+
   TextStyle googleRubikFontsForSecondaryText({double ?fontSize , FontWeight? fontWeight}){
     return GoogleFonts.rubik(textStyle: TextStyle(fontWeight: fontWeight??FontWeight.w500,fontSize: fontSize??12,color: const Color(0xFF404040)));
   }

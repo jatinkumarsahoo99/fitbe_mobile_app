@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../../app_theme/text_styles.dart';
 
 class GenderScreen extends StatefulWidget {
-  Function(int index) onTap;
-   GenderScreen({super.key,required this.onTap});
+   final Function(int index) onTap;
+   const GenderScreen({super.key,required this.onTap});
 
   @override
   State<GenderScreen> createState() => _GenderScreenState();
