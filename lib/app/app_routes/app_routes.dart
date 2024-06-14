@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../modules/forgot_password/forgot_password.dart';
 import '../modules/forgot_password/forgot_password_otp.dart';
+import '../modules/home_screen/home_screen.dart';
 import '../modules/intro_screen/intro_screen.dart';
 import '../modules/preference_screen/preference_screen.dart';
 import '../modules/recommendation_screen/recommendation_screen.dart';
@@ -22,6 +23,7 @@ class AppRoutes{
     "/forgotPasswordOtp":(context) => const ForgotPasswordOtp(),
     "/preferenceScreen":(context) => const PreferenceScreen(),
     "/recommendationScreen":(context) => const RecommendationScreen(),
+    "/homeScreen":(context) => const HomeScreen(),
   };
 
 }

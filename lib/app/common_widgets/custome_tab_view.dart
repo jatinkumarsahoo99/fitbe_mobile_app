@@ -119,6 +119,10 @@ class _CustomTabsState extends State<CustomTabView> with TickerProviderStateMixi
             unselectedLabelStyle:  TextStyles(context).googleRubikFontsForText(fontSize: 14,fontWeight: FontWeight.w500),
             dividerColor: Colors.white,
             padding:const EdgeInsets.all(4),
+            labelPadding:const EdgeInsets.all(1),
+            tabAlignment:TabAlignment.center,
+
+
 
             // splashBorderRadius: ,
 
