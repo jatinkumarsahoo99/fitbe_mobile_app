@@ -1,4 +1,7 @@
+import 'package:fitbe/app/common_widgets/week_status_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../app_theme/text_styles.dart';
 
 class GoalDataCard extends StatelessWidget {
   const GoalDataCard({super.key});
@@ -6,7 +9,7 @@ class GoalDataCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 135,
+      height: 105,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [ Color(0xFF606591), Color(0xFF2088B4)],
@@ -15,27 +18,31 @@ class GoalDataCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: const Padding(
-        padding:  EdgeInsets.all(8.0),
+      child:  Padding(
+        padding:  const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
+             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Goal Data"),
-                Text("Last 7 days >")
+                Text("Goal Data",style: TextStyles(context).googleRubikFontsForButtonText(fontSize: 16,fontWeight: FontWeight.w500),),
+                Text("Last 7 days >",style: TextStyles(context).googleRubikFontsForButtonText(fontSize: 12,fontWeight: FontWeight.w400))
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
+                 Column(
                   children: [
-                    Text("4 of 7")
+                    Text("4 of 7",style: TextStyles(context).googleRubikFontsForButtonText(fontSize: 14,fontWeight: FontWeight.w500),),
+                    Text("Archived",style: TextStyles(context).googleRubikFontsForButtonText(fontSize: 14,fontWeight: FontWeight.w500),)
                   ],
                 ),
-                Column(
-                  children: [],
-                ),
+                SizedBox(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width*0.535,
+                    child: WeekStatusWidget())
               ],
             )
           ],
