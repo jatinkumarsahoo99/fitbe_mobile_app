@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../app_theme/text_styles.dart';
 import '../../common_widgets/card_widget_with_per.dart';
 import '../../common_widgets/goal_data_card.dart';
 import '../../common_widgets/grid_view_widget.dart';
@@ -18,24 +19,72 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SafeArea(
             child: Padding(
       padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          const Row(
-            children: [
-              Column(
-                children: [],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+             Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          // Icon(Icons.tag_faces, color: Colors.blue),
+                          Image.asset("assets/images/hi.png",height: 20,width: 20,),
+                          SizedBox(width: 5.0),
+                          Text(
+                            'Good Morning!',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5.0),
+                      Text(
+                        'Monty Bradshaw',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    width: 60.0, // Radius * 2
+                    height: 60.0, // Radius * 2
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/man.jpg'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
-          const CardWidgetWithPer(),
-          SizedBox(
-              height: 350,
-              child: GridViewExample()),
-          const SizedBox(
-            height: 15,
-          ),
-          const GoalDataCard()
-        ],
+            ),
+            const CardWidgetWithPer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Text("Daily plan",style: TextStyle(color: Color(0xff000000),fontSize: 18,fontWeight: FontWeight.w600),),
+              ],
+            ),
+            SizedBox(height: 350, child: GridViewExample()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Text("Goal Statistics",style: TextStyle(color: Color(0xff000000),fontSize: 18,fontWeight: FontWeight.w600),),
+              ],
+            ),
+            const GoalDataCard()
+          ],
+        ),
       ),
     )));
   }
