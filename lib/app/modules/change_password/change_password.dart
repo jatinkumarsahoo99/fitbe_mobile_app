@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../app_theme/text_styles.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_password_text_field.dart';
-import '../../common_widgets/common_text_field_view.dart';
 import '../../common_widgets/remove_focuse.dart';
 
 class ChangePassword extends StatefulWidget {

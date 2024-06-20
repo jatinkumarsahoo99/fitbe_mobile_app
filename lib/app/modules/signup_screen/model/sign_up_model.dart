@@ -36,17 +36,17 @@ class SignUpModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['FirstName'] = this.firstName;
-    data['LastName'] = this.lastName;
-    data['Email'] = this.email;
-    data['Gender'] = this.gender;
-    data['MobileNumber'] = this.mobileNumber;
-    data['DateOfBirth'] = this.dateOfBirth;
-    data['EmailVerified'] = this.emailVerified;
-    data['MobileNumberVerified'] = this.mobileNumberVerified;
-    data['OTP'] = this.oTP;
-    data['CreatedAt'] = this.createdAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['FirstName'] = firstName;
+    data['LastName'] = lastName;
+    data['Email'] = email;
+    data['Gender'] = gender;
+    data['MobileNumber'] = mobileNumber;
+    data['DateOfBirth'] = dateOfBirth;
+    data['EmailVerified'] = emailVerified;
+    data['MobileNumberVerified'] = mobileNumberVerified;
+    data['OTP'] = oTP;
+    data['CreatedAt'] = createdAt;
     return data;
   }
 }

@@ -40,6 +40,10 @@ dependencies:
   sms_autofill:
   pin_input_text_field:
   percent_indicator:
+  font_awesome_flutter:
+  dio:
+  flutter_easyloading:
+  provider:
 #  numberpicker:
 #  animated_weight_picker:
 
@@ -54,11 +58,6 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   flutter_launcher_icons:
-  percent_indicator:
-  font_awesome_flutter:
-  dio:
-  flutter_easyloading:
-  provider:
 #  flutter_provider:
 
 # For information on the generic Dart part of this file, see the

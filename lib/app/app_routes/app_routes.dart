@@ -13,10 +13,10 @@ import '../modules/verification_screen/verification_screen.dart';
 
 class AppRoutes{
   // late BuildContext context;
-  static Map<String,Widget Function(BuildContext)> appRoutes = {
+  static Map<String,WidgetBuilder> appRoutes = {
     "/splashScreen":(context) =>  const SplashScreen(),
     "/introScreen":(context) => const IntroScreen(),
-    "/signupScreen":(context) => const SignUpScreen(),
+    "/signupScreen": SignUpScreen.builder,
     "/verificationScreen":(context) => const VerificationScreen(),
     "/signInScreen":(context) => const SigninScreen(),
     "/forgotPassword":(context) => const ForgotPassword(),

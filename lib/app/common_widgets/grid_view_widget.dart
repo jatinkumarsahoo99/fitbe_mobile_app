@@ -8,6 +8,8 @@ class GridViewExample extends StatelessWidget {
     "icon": Icons.local_fire_department, // You can change the icon here
   });
 
+  GridViewExample({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,14 +47,14 @@ class GridViewExample extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Text(
                   items[index]["value"],
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 Text(
                   items[index]["unit"],
-                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                  style: const TextStyle(fontSize: 18, color: Colors.grey),
                 ),
               ],
             ),

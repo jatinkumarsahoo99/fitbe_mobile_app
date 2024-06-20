@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../app_theme/text_styles.dart';
 import '../../common_widgets/card_widget_with_per.dart';
 import '../../common_widgets/goal_data_card.dart';
 import '../../common_widgets/grid_view_widget.dart';
@@ -18,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         body: SafeArea(
             child: Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -34,8 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           // Icon(Icons.tag_faces, color: Colors.blue),
                           Image.asset("assets/images/hi.png",height: 20,width: 20,),
-                          SizedBox(width: 5.0),
-                          Text(
+                          const SizedBox(width: 5.0),
+                          const Text(
                             'Good Morning!',
                             style: TextStyle(
                               fontSize: 14.0,
@@ -44,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 5.0),
-                      Text(
+                      const SizedBox(height: 5.0),
+                      const Text(
                         'Monty Bradshaw',
                         style: TextStyle(
                           fontSize: 20.0,
@@ -69,17 +68,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const CardWidgetWithPer(),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Text("Daily plan",style: TextStyle(color: Color(0xff000000),fontSize: 18,fontWeight: FontWeight.w600),),
+                Text("Daily plan",style: TextStyle(color: Color(0xff000000),fontSize: 18,fontWeight: FontWeight.w600),),
               ],
             ),
             SizedBox(height: 350, child: GridViewExample()),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Text("Goal Statistics",style: TextStyle(color: Color(0xff000000),fontSize: 18,fontWeight: FontWeight.w600),),
+                Text("Goal Statistics",style: TextStyle(color: Color(0xff000000),fontSize: 18,fontWeight: FontWeight.w600),),
               ],
             ),
             const GoalDataCard()
