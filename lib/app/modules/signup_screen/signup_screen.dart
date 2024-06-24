@@ -6,6 +6,7 @@ import '../../app_theme/text_styles.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_password_text_field.dart';
 import '../../common_widgets/common_text_field_view.dart';
+import '../../common_widgets/header_text_widget.dart';
 import '../../common_widgets/remove_focuse.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -15,8 +16,9 @@ class SignUpScreen extends StatefulWidget {
   _SignUpScreenState createState() => _SignUpScreenState();
 
   static Widget builder(BuildContext context) {
-    return ChangeNotifierProvider(create: (context) => SignUpProvider(),
-      child:const SignUpScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => SignUpProvider(),
+      child: const SignUpScreen(),
     );
   }
 }
@@ -52,28 +54,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 64,
                   ),*/
                   Expanded(flex: 3, child: Container()),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 76.0, right: 76, top: 0, bottom: 0),
-                    child: Text(
-                      "Create Account",
-                      textAlign: TextAlign.center,
-                      style: TextStyles(context).googleRubikFontsForHeading(
-                          fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 76.0, right: 76, top: 0, bottom: 0),
-                    child: Text(
-                      "Fill The Details To Create An Account",
-                      textAlign: TextAlign.center,
-                      style: TextStyles(context).googleRubikFontsForText(
-                          fontSize: 10, fontWeight: FontWeight.w400),
-                    ),
+                  HeaderTextWidget(
+                    headerText: "Create Account",
+                    headDesc: "Fill The Details To Create An Account",
+                    key: UniqueKey(),
                   ),
                   const SizedBox(
                     height: 24,
@@ -187,7 +171,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
                         onTap: () {
-                          // NavigationServices(context).gotoLoginScreen();
+                          Navigator.pushNamed(context, "/signInScreen");
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../app_theme/text_styles.dart';
 import '../../common_widgets/card_widget_with_per.dart';
 import '../../common_widgets/goal_data_card.dart';
 import '../../common_widgets/grid_view_widget.dart';
@@ -34,28 +35,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           // Icon(Icons.tag_faces, color: Colors.blue),
                           Image.asset("assets/images/hi.png",height: 20,width: 20,),
                           const SizedBox(width: 5.0),
-                          const Text(
+                           Text(
                             'Good Morning!',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.grey,
-                            ),
+                            style: TextStyles(context).googleRubikFontsForHeading(fontSize: 12,fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5.0),
-                      const Text(
+                      // const SizedBox(height: 3.0),
+                       Text(
                         'Monty Bradshaw',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyles(context).googleRubikFontsForHeading(fontSize: 20,fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
                   Container(
-                    width: 60.0, // Radius * 2
-                    height: 60.0, // Radius * 2
+                    width: 50.0, // Radius * 2
+                    height: 50.0, // Radius * 2
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
@@ -68,18 +63,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const CardWidgetWithPer(),
-            const Row(
+            const SizedBox(
+              height: 4,
+            ),
+             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Daily plan",style: TextStyle(color: Color(0xff000000),fontSize: 18,fontWeight: FontWeight.w600),),
+                Text("Daily plan",style: TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600,fontSize: 18),)
               ],
             ),
-            SizedBox(height: 350, child: GridViewExample()),
-            const Row(
+            const SizedBox(
+              height: 4,
+            ),
+            SizedBox(height: 340, child: GridViewExample()),
+             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Goal Statistics",style: TextStyle(color: Color(0xff000000),fontSize: 18,fontWeight: FontWeight.w600),),
+                Text("Goal Statistics",style: TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600,fontSize: 18),),
               ],
+            ),
+            const SizedBox(
+              height: 4,
             ),
             const GoalDataCard()
           ],

@@ -3,6 +3,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../app_theme/text_styles.dart';
 import '../../common_widgets/common_button.dart';
+import '../../common_widgets/header_text_widget.dart';
 import '../../common_widgets/remove_focuse.dart';
 
 class ForgotPasswordOtp extends StatefulWidget {
@@ -62,32 +63,13 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                       ],
                     ),
                     Expanded(flex: 1, child: Container()),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 76.0, right: 76, top: 0, bottom: 0),
-                      child: Text(
-                        "Verification",
-                        textAlign: TextAlign.center,
-                        style: TextStyles(context).googleRubikFontsForHeading(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
+
+                    HeaderTextWidget(
+                      headerText: "Verification",
+                      headDesc: "Enter Verification Codes to Confirm.",
+                      key: UniqueKey(),
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 76.0, right: 76, top: 0, bottom: 0),
-                      child: Text(
-                        "Enter Verification Codes to Confirm.",
-                        textAlign: TextAlign.center,
-                        style: TextStyles(context).googleRubikFontsForText(
-                            fontSize: 10, fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
+
                     Row(
                       children: [
                         Text(

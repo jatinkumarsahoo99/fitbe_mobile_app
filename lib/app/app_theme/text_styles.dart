@@ -54,6 +54,10 @@ class TextStyles{
     return GoogleFonts.rubik(textStyle: TextStyle(fontWeight: fontWeight??FontWeight.w500,fontSize: fontSize??12,color: const Color(0xFF404040)));
   }
 
+  TextStyle googleRubikFontsForSecondaryText9({double ?fontSize , FontWeight? fontWeight}){
+    return GoogleFonts.rubik(textStyle: TextStyle(fontWeight: fontWeight??FontWeight.w500,fontSize: fontSize??12,color: const Color(0xFF000000)));
+  }
+
   TextStyle googleRubikFontsForButtonText({double ?fontSize , FontWeight? fontWeight}){
     return GoogleFonts.rubik(textStyle: TextStyle(fontWeight: fontWeight??FontWeight.w400,fontSize: fontSize??16,color: const Color(0xFFFFFFFF)));
   }

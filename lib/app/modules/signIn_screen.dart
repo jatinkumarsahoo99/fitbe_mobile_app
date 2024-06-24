@@ -4,6 +4,7 @@ import '../app_theme/text_styles.dart';
 import '../common_widgets/common_button.dart';
 import '../common_widgets/common_password_text_field.dart';
 import '../common_widgets/common_text_field_view.dart';
+import '../common_widgets/header_text_widget.dart';
 import '../common_widgets/remove_focuse.dart';
 
 class SigninScreen extends StatefulWidget {
@@ -37,27 +38,11 @@ class _SigninScreenState extends State<SigninScreen> {
                   Expanded(
                       flex: 3,
                       child:Container()),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 76.0,right: 76,top: 0,bottom: 0),
-                    child: Text(
-                      "Sign In",
-                      textAlign: TextAlign.center,
-                      style: TextStyles(context).googleRubikFontsForHeading(fontSize: 18,fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 76.0,right: 76,top: 0,bottom: 0),
-                    child: Text(
-                      "Welcome Back! Fill The Details To Sign In",
-                      textAlign: TextAlign.center,
-                      style: TextStyles(context).googleRubikFontsForText(fontSize: 10,fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 24,
+
+                  HeaderTextWidget(
+                    headerText: "Sign In",
+                    headDesc: "Welcome Back! Fill The Details To Sign In",
+                    key: UniqueKey(),
                   ),
 
                   CommonTextFieldView(
@@ -139,7 +124,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       InkWell(
                         borderRadius: const BorderRadius.all(Radius.circular(8)),
                         onTap: () {
-                          // NavigationServices(context).gotoLoginScreen();
+                          Navigator.pushNamed(context, "/signupScreen");
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
