@@ -54,7 +54,7 @@ class IntroScreen extends StatelessWidget {
             buttonText: "Let’s Get Started",
             radius: 30,
             onTap: () {
-              Navigator.pushNamed(context, "/signupScreen");
+              Navigator.pushNamed(context, "/signInScreen");
             },
           ),
           Expanded(

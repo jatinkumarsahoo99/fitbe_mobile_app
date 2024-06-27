@@ -1,3 +1,4 @@
+import 'package:fitbe/app/app_utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../app_theme/text_styles.dart';
@@ -6,6 +7,7 @@ import '../common_widgets/common_password_text_field.dart';
 import '../common_widgets/common_text_field_view.dart';
 import '../common_widgets/header_text_widget.dart';
 import '../common_widgets/remove_focuse.dart';
+import '../common_widgets/show_snack_bar.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -15,6 +17,9 @@ class SigninScreen extends StatefulWidget {
 }
 
 class _SigninScreenState extends State<SigninScreen> {
+
+  TextEditingController emailIdOrMobileController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +51,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   ),
 
                   CommonTextFieldView(
-                    controller: TextEditingController(),
+                    controller: emailIdOrMobileController,
                     // errorText: _errorFName,
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     titleText: "Email ID Or Mobile Number",
@@ -65,7 +70,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     isObscureText: true,
                     onChanged: (String txt) {},
                     // errorText: _errorPassword,
-                    controller: TextEditingController(),
+                    controller: passwordController,
                   ),
                   const SizedBox(
                     height: 8,
@@ -105,8 +110,11 @@ class _SigninScreenState extends State<SigninScreen> {
                     const EdgeInsets.only(left: 16, right: 16),
                     buttonText: "Sign In",
                     onTap: () {
-                      // Navigator.pushNamed(context, "/verificationScreen");
+
                       // NavigationServices(context).gotoTabScreen();
+                      if(validate()){
+                        Navigator.pushNamed(context, "/preferenceScreen");
+                      }
                     },
                   ),
                   Expanded(
@@ -144,4 +152,35 @@ class _SigninScreenState extends State<SigninScreen> {
       ),
     );
   }
+
+  bool validate(){
+    if(emailIdOrMobileController.text == ""){
+      ShowSnackBar.showError(context, "Please enter the email or mobile");
+    }else if(passwordController.text == ""){
+      ShowSnackBar.showError(context, "Please enter your password");
+    }else if(!checkUserId(emailIdOrMobileController.text)){
+      ShowSnackBar.showError(context, "Please enter valid email Id or Password");
+    }else{
+      return true;
+    }
+    return false;
+  }
+
+  bool checkUserId(String userId){
+    try{
+      if(double.parse(userId).runtimeType == double && userId.length == 10){
+        return true;
+      }else{
+        return false;
+      }
+    }catch(e){
+      if(userId.isValidEmail()){
+        return true;
+      }else{
+        return false;
+      }
+      debugPrint(">>>>>>>>>>>>>exception$e");
+    }
+  }
+
 }

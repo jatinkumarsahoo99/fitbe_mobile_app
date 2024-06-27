@@ -1,3 +1,4 @@
+import 'package:fitbe/app/app_utils/utils.dart';
 import 'package:fitbe/app/modules/signup_screen/provider/sign_up_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import '../../common_widgets/common_password_text_field.dart';
 import '../../common_widgets/common_text_field_view.dart';
 import '../../common_widgets/header_text_widget.dart';
 import '../../common_widgets/remove_focuse.dart';
+import '../../common_widgets/show_snack_bar.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -24,11 +26,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final String _errorEmail = '';
-  final TextEditingController _emailController = TextEditingController();
-  final String _errorPassword = '';
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _fnameController = TextEditingController();
+  TextEditingController emailIdController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   bool isCheck = true;
 
@@ -63,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 24,
                   ),
                   CommonTextFieldView(
-                    controller: _fnameController,
+                    controller: fullNameController,
                     // errorText: _errorFName,
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     titleText: "Full Name",
@@ -75,8 +76,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 10,
                   ),
                   CommonTextFieldView(
-                    controller: _emailController,
-                    errorText: _errorEmail,
+                    controller: emailIdController,
+                    errorText: "",
                     titleText: "Email ID",
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     hintText: "Email ID",
@@ -87,8 +88,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 10,
                   ),
                   CommonTextFieldView(
-                    controller: _emailController,
-                    errorText: _errorEmail,
+                    controller: mobileController,
+                    errorText: "",
                     titleText: "Mobile Number",
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     hintText: "Mobile Number",
@@ -104,8 +105,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: "Password",
                     isObscureText: true,
                     onChanged: (String txt) {},
-                    errorText: _errorPassword,
-                    controller: _passwordController,
+                    errorText: "",
+                    controller: passwordController,
                   ),
                   const SizedBox(
                     height: 16,
@@ -152,7 +153,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     buttonText: "SignUp",
                     onTap: () {
-                      Navigator.pushNamed(context, "/verificationScreen");
+                      if(validate()) {
+                        Navigator.pushNamed(context, "/signInScreen");
+                      }
                       // NavigationServices(context).gotoTabScreen();
                     },
                   ),
@@ -192,4 +195,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+  bool validate(){
+    if(fullNameController.text == ""){
+      ShowSnackBar.showError(context, "Please enter the full name");
+    }
+    else if(emailIdController.text == ""){
+      ShowSnackBar.showError(context, "Please enter the email");
+    }else if(emailIdController.text.isValidEmail()){
+      ShowSnackBar.showError(context, "Please enter the valid email");
+    }else if(mobileController.text == ""){
+      ShowSnackBar.showError(context, "Please enter the mobile");
+    }else if(mobileController.text.length < 10){
+      ShowSnackBar.showError(context, "Please enter the valid mobile no");
+    }else if(passwordController.text == ""){
+      ShowSnackBar.showError(context, "Please enter your password");
+    }else{
+      return true;
+    }
+    return false;
+  }
+
+  bool checkUserId(String userId){
+    try{
+      if(double.parse(userId).runtimeType == double && userId.length == 10){
+        return true;
+      }else{
+        return false;
+      }
+    }catch(e){
+      if(userId.isValidEmail()){
+        return true;
+      }else{
+        return false;
+      }
+      debugPrint(">>>>>>>>>>>>>exception$e");
+    }
+  }
+
 }
