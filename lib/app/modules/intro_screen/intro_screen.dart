@@ -53,7 +53,7 @@ class IntroScreen extends StatelessWidget {
                 const EdgeInsets.only(left: 16, right: 16, bottom: 40, top: 24),
             buttonText: "Let’s Get Started",
             radius: 30,
-            onTap: () {
+            onTap: ()  {
               Navigator.pushNamed(context, "/signInScreen");
             },
           ),
