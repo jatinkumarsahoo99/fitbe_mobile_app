@@ -1,7 +1,14 @@
+import 'dart:convert';
+
+import 'package:fitbe/app/app_utils/helper.dart';
 import 'package:fitbe/app/app_utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../app_api_services/api_end_point.dart';
+import '../app_api_services/http_methods.dart';
 import '../app_theme/text_styles.dart';
+import '../app_utils/shared_preferance.dart';
 import '../common_widgets/common_button.dart';
 import '../common_widgets/common_password_text_field.dart';
 import '../common_widgets/common_text_field_view.dart';
@@ -16,8 +23,7 @@ class SigninScreen extends StatefulWidget {
   State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _SigninScreenState extends State<SigninScreen> {
-
+class _SigninScreenState extends State<SigninScreen> with Helper {
   TextEditingController emailIdOrMobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -40,22 +46,18 @@ class _SigninScreenState extends State<SigninScreen> {
                   /* const SizedBox(
                     height: 64,
                   ),*/
-                  Expanded(
-                      flex: 3,
-                      child:Container()),
-
+                  Expanded(flex: 3, child: Container()),
                   HeaderTextWidget(
                     headerText: "Sign In",
                     headDesc: "Welcome Back! Fill The Details To Sign In",
                     key: UniqueKey(),
                   ),
-
                   CommonTextFieldView(
                     controller: emailIdOrMobileController,
                     // errorText: _errorFName,
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     titleText: "Email ID Or Mobile Number",
-                    hintText:"Email ID Or Mobile Number",
+                    hintText: "Email ID Or Mobile Number",
                     keyboardType: TextInputType.name,
                     onChanged: (String txt) {},
                   ),
@@ -63,10 +65,9 @@ class _SigninScreenState extends State<SigninScreen> {
                     height: 10,
                   ),
                   CommonPasswordTextFieldView(
-                    titleText:"Password",
-                    padding: const EdgeInsets.only(
-                        left: 16, right: 16),
-                    hintText:"Password",
+                    titleText: "Password",
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    hintText: "Password",
                     isObscureText: true,
                     onChanged: (String txt) {},
                     // errorText: _errorPassword,
@@ -75,15 +76,13 @@ class _SigninScreenState extends State<SigninScreen> {
                   const SizedBox(
                     height: 8,
                   ),
-
                   Padding(
-                    padding: const EdgeInsets.only(left: 16.0,right: 16),
+                    padding: const EdgeInsets.only(left: 16.0, right: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         InkWell(
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
                             // NavigationServices(context).gotoLoginScreen();
                             Navigator.pushNamed(context, "/forgotPassword");
@@ -92,10 +91,7 @@ class _SigninScreenState extends State<SigninScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Text(
                               "Forgot Password",
-                              style: TextStyles(context)
-                                  .googleRubikFontsForText2(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400),
+                              style: TextStyles(context).googleRubikFontsForText2(fontSize: 12, fontWeight: FontWeight.w400),
                             ),
                           ),
                         ),
@@ -106,20 +102,17 @@ class _SigninScreenState extends State<SigninScreen> {
                     height: 40,
                   ),
                   CommonButton(
-                    padding:
-                    const EdgeInsets.only(left: 16, right: 16),
+                    padding: const EdgeInsets.only(left: 16, right: 16),
                     buttonText: "Sign In",
                     onTap: () {
-
-                      // NavigationServices(context).gotoTabScreen();
-                      if(validate()){
-                        Navigator.pushNamed(context, "/preferenceScreen");
+                      // showCommonPopupNew("Verification","Verification Pending\nPlease complete your verification",context,barrierDismissible: false,isYesOrNoPopup: false);
+                      if (validate()) {
+                        callSignInApi();
+                        // Navigator.pushNamed(context, "/preferenceScreen");
                       }
                     },
                   ),
-                  Expanded(
-                      flex: 7,
-                      child:Container()),
+                  Expanded(flex: 7, child: Container()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,7 +120,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       Text(
                         "Don't Have An Account? ",
                         textAlign: TextAlign.center,
-                        style: TextStyles(context).googleRubikFontsForHeading(fontSize: 14,fontWeight: FontWeight.w400),
+                        style: TextStyles(context).googleRubikFontsForHeading(fontSize: 14, fontWeight: FontWeight.w400),
                       ),
                       InkWell(
                         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -138,7 +131,7 @@ class _SigninScreenState extends State<SigninScreen> {
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
                             "Sign Up",
-                            style:TextStyles(context).googleRubikFontsForText2(fontSize: 14,fontWeight: FontWeight.w500),
+                            style: TextStyles(context).googleRubikFontsForText2(fontSize: 14, fontWeight: FontWeight.w500),
                           ),
                         ),
                       ),
@@ -153,34 +146,97 @@ class _SigninScreenState extends State<SigninScreen> {
     );
   }
 
-  bool validate(){
-    if(emailIdOrMobileController.text == ""){
+  bool validate() {
+    if (emailIdOrMobileController.text == "") {
       ShowSnackBar.showError(context, "Please enter the email or mobile");
-    }else if(passwordController.text == ""){
+    } else if (passwordController.text == "") {
       ShowSnackBar.showError(context, "Please enter your password");
-    }else if(!checkUserId(emailIdOrMobileController.text)){
-      ShowSnackBar.showError(context, "Please enter valid email Id or Password");
-    }else{
+    } else if (!checkUserId(emailIdOrMobileController.text)) {
+      ShowSnackBar.showError(context, "Please enter valid email Id or Mobile No");
+    } else {
       return true;
     }
     return false;
   }
 
-  bool checkUserId(String userId){
-    try{
-      if(double.parse(userId).runtimeType == double && userId.length == 10){
+  bool checkUserId(String userId) {
+    try {
+      if (double.parse(userId).runtimeType == double && userId.length == 10) {
         return true;
-      }else{
+      } else {
         return false;
       }
-    }catch(e){
-      if(userId.isValidEmail()){
+    } catch (e) {
+      if (userId.isValidEmail()) {
         return true;
-      }else{
+      } else {
         return false;
       }
       debugPrint(">>>>>>>>>>>>>exception$e");
     }
   }
+
+
+  callSignInApi() {
+    try {
+      Utils.showProgressIndicator();
+      Map<String, dynamic> postData = (Utils.checkIsDouble(emailIdOrMobileController.text) == false)
+          ? {"EmailAddress": emailIdOrMobileController.text, "Password": passwordController.text}
+          : {"MobileNumber": emailIdOrMobileController.text, "Password": passwordController.text};
+      HttpMethodsDio().postMethod(
+          api: ApiEndPoint.signInUrl,
+          json: postData,
+          fun: (map, code)  {
+            Utils.disMissProgressIndicator();
+
+            if (map is Map) {
+              if (map.containsKey("data") && map['data'] is Map && map["data"]['Status'] == "VERIFICATION_COMPLETED") {
+                postData['userId'] = map['data']["UserID"];
+                setLogInData(postData: postData, logInStatus: map["data"]['Status']);
+                // EasyLoading.showSuccess("Done");
+                Navigator.pushNamed(context, "/preferenceScreen");
+              } else if (map.containsKey("data") && map['data'] is Map && map["data"]['Status'] == "VERIFICATION_PENDING") {
+                postData['userId'] = map['data']["UserID"];
+                setLogInData(postData: postData, logInStatus: map["data"]['Status']);
+                openDialog(postData);
+              } else if (map.containsKey("data") && map['data'] is Map && map["data"]['Status'] == "COMPLETED") {
+                postData['userId'] = map['data']["UserID"];
+                setLogInData(postData: postData, logInStatus: map["data"]['Status']);
+                Navigator.pushNamed(context, "/homeScreen");
+              } else if (map.containsKey("message")) {
+                ShowSnackBar.showError(context, map["message"] ?? "Something went wrong");
+              } else {
+                ShowSnackBar.showError(context, "$map");
+              }
+            } else {
+              ShowSnackBar.showError(context, "$map");
+            }
+          });
+    } catch (e) {
+      debugPrint("exception:$e");
+      Utils.disMissProgressIndicator();
+    }
+  }
+
+  setLogInData({required Map<String,dynamic> postData,required String logInStatus}) async {
+    SharedPref sharedPref = SharedPref();
+    await sharedPref.save("isLogIn", "true");
+    await sharedPref.save("logInData", jsonEncode(postData));
+    await sharedPref.save("logInSta", logInStatus);
+  }
+
+  openDialog(Map<String,dynamic> postData) async {
+    bool isOk = await showCommonPopupNew(
+        "Verification", "Verification Pending\nPlease complete your verification", context,
+        barrierDismissible: false, isYesOrNoPopup: false);
+    if (isOk) {
+      Navigator.pushNamed(
+        context,
+        "/verificationScreen",
+        arguments: postData,
+      );
+    }
+  }
+
 
 }

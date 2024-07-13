@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../modules/change_password/change_password.dart';
 import '../modules/forgot_password/forgot_password.dart';
 import '../modules/forgot_password/forgot_password_otp.dart';
 import '../modules/home_screen/home_screen.dart';
@@ -24,6 +25,7 @@ class AppRoutes{
     "/preferenceScreen":(context) => const PreferenceScreen(),
     "/recommendationScreen":(context) => const RecommendationScreen(),
     "/homeScreen":(context) => const HomeScreen(),
+    "/changePassword":(context) => const ChangePassword(),
   };
 
 }

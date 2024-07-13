@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../app_api_services/api_end_point.dart';
+import '../../app_api_services/http_methods.dart';
 import '../../app_theme/text_styles.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_password_text_field.dart';
 import '../../common_widgets/remove_focuse.dart';
+import '../../common_widgets/show_snack_bar.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -13,6 +16,8 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
+  TextEditingController passwordTextEditingController = TextEditingController();
+  TextEditingController confirmPasswordTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +97,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     isObscureText: true,
                     onChanged: (String txt) {},
                     errorText: null,
-                    controller: TextEditingController(),
+                    controller: passwordTextEditingController,
                   ),
                   CommonPasswordTextFieldView(
                     titleText:"Confirm New Password",
@@ -102,7 +107,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     isObscureText: true,
                     onChanged: (String txt) {},
                     errorText: null,
-                    controller: TextEditingController(),
+                    controller: confirmPasswordTextEditingController,
                   ),
                   const SizedBox(
                     height: 40,
@@ -113,7 +118,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                     const EdgeInsets.only(left: 16, right: 16),
                     buttonText: "Create New Password",
                     onTap: () {
-                      Navigator.pushNamed(context, "/forgotPasswordOtp");
+                      validate();
+
                       // NavigationServices(context).gotoTabScreen();
                     },
                   ),
@@ -128,4 +134,27 @@ class _ChangePasswordState extends State<ChangePassword> {
       ),
     );
   }
+
+  validate(){
+    if(passwordTextEditingController.text.trim() == ""){
+      ShowSnackBar.showError(context, "Please enter the password");
+    }else if(confirmPasswordTextEditingController.text.trim() == ""){
+      ShowSnackBar.showError(context, "Please enter the confirm password");
+    }else if(passwordTextEditingController.text != confirmPasswordTextEditingController.text){
+      ShowSnackBar.showError(context, "Password and confirm password should be same");
+    }else{
+      Navigator.pushNamed(context, "/signInScreen");
+      callChangePasswordApi();
+    }
+  }
+
+  callChangePasswordApi(){
+    HttpMethodsDio().postMethod(api: ApiEndPoint.signUpUrl, json: {
+      "password": "new password"
+    }, fun: (map,code) {
+      Navigator.pushNamed(context, "/verificationScreen");
+    });
+  }
+
+
 }

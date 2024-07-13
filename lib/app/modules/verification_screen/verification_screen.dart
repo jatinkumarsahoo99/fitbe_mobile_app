@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
+import '../../app_api_services/api_end_point.dart';
+import '../../app_api_services/http_methods.dart';
 import '../../app_theme/text_styles.dart';
+import '../../app_utils/shared_preferance.dart';
+import '../../app_utils/utils.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/remove_focuse.dart';
+import '../../common_widgets/show_snack_bar.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -13,15 +18,25 @@ class VerificationScreen extends StatefulWidget {
 }
 
 class _VerificationScreenState extends State<VerificationScreen> {
-  TextEditingController otpTextEditingController = TextEditingController();
+  TextEditingController emailOtpTextEditingController = TextEditingController();
+  TextEditingController mobileOtpTextEditingController = TextEditingController();
+
+  String emailOtp = "";
+  String mobileOtp = "";
+  SharedPref sharedPref = SharedPref();
+  String userId ="";
+  Map<String,dynamic> argumentData = {};
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    argumentData = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
     Size size = MediaQuery.of(context).size;
 
-    double usableHeight = size.height -
-        MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom;
+    double usableHeight = size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
     return Scaffold(
       body: RemoveFocuse(
         onClick: () {
@@ -41,13 +56,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     Row(
                       children: [
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             Navigator.pop(context);
                           },
                           child: Container(
                               decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.grey, width: 0.1),
+                                border: Border.all(color: Colors.grey, width: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                                 // color: const Color(0xFFD9D9D9)
                               ),
@@ -63,26 +77,22 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     ),
                     Expanded(flex: 1, child: Container()),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 76.0, right: 76, top: 0, bottom: 0),
+                      padding: const EdgeInsets.only(left: 76.0, right: 76, top: 0, bottom: 0),
                       child: Text(
                         "Verification",
                         textAlign: TextAlign.center,
-                        style: TextStyles(context).googleRubikFontsForHeading(
-                            fontSize: 18, fontWeight: FontWeight.w500),
+                        style: TextStyles(context).googleRubikFontsForHeading(fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 76.0, right: 76, top: 0, bottom: 0),
+                      padding: const EdgeInsets.only(left: 76.0, right: 76, top: 0, bottom: 0),
                       child: Text(
                         "Enter Verification Codes to Confirm.",
                         textAlign: TextAlign.center,
-                        style: TextStyles(context).googleRubikFontsForText(
-                            fontSize: 10, fontWeight: FontWeight.w400),
+                        style: TextStyles(context).googleRubikFontsForText(fontSize: 10, fontWeight: FontWeight.w400),
                       ),
                     ),
                     const SizedBox(
@@ -92,9 +102,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       children: [
                         Text(
                           "Email Verification Code",
-                          style: TextStyles(context)
-                              .googleRubikFontsForSecondaryText(
-                                  fontSize: 12, fontWeight: FontWeight.w500),
+                          style: TextStyles(context).googleRubikFontsForSecondaryText(fontSize: 12, fontWeight: FontWeight.w500),
                         )
                       ],
                     ),
@@ -102,28 +110,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       height: 40,
                       child: PinFieldAutoFill(
                         textInputAction: TextInputAction.done,
-                        // autoFocus: true,
-                        // enabled: true,
-                        // enableInteractiveSelection: true,
-                        /*  autoFocus: true,
-                          cursor: Cursor(color: Colors.black,width: 2),
-                          enabled: true,
-                              codeLength: 6,
-                              enableInteractiveSelection: true,
-                              focusNode:FocusNode() ,*/
                         codeLength: 4,
-                        controller: otpTextEditingController,
-                        // focusNode: FocusNode(),
-                        // cursor: Cursor(color:ColorsGroup.primaryColor),
-                        /* decoration: UnderlineDecoration(
-                          textStyle:  TextStyles(context).googleRubikFontsForText(fontSize: 16,fontWeight: FontWeight.w500),
-                          colorBuilder: const FixedColorBuilder(
-                            Colors.transparent,
-                          ),
-                          bgColorBuilder: const FixedColorBuilder(
-                            Color(0xFFF4F6F9),
-                          ),
-                        ),*/
+                        controller: emailOtpTextEditingController,
                         decoration: BoxLooseDecoration(
                             radius: const Radius.circular(10),
                             strokeColorBuilder: const FixedColorBuilder(
@@ -133,25 +121,30 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               Color(0xFFF4F6F9),
                             ),
                             gapSpace: 12.67),
-                        currentCode: "",
+                        currentCode: emailOtp,
                         onCodeSubmitted: (code) {
-                          debugPrint("onCodeSubmitted $code");
-                          otpTextEditingController.text = code;
+                          if (code.toString().length == 4) {
+                            debugPrint("onCodeSubmitted $code");
+                            emailOtp = code ?? "";
+                          }
                         },
-                        onCodeChanged: (code) {},
+                        onCodeChanged: (code) {
+                          if (code.toString().length == 4) {
+                            debugPrint("onCodeSubmitted $code");
+                            emailOtp = code ?? "";
+                          }
+                        },
                       ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "[jatinkumarsahoo99@gmail.com]",
-                          style: TextStyles(context).googleRubikFontsForText(
-                              fontSize: 12, fontWeight: FontWeight.w400),
+                          "[${argumentData['EmailAddress']}]",
+                          style: TextStyles(context).googleRubikFontsForText(fontSize: 12, fontWeight: FontWeight.w400),
                         ),
                         InkWell(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
                             // NavigationServices(context).gotoLoginScreen();
                           },
@@ -159,10 +152,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Text(
                               "Resend OTP",
-                              style: TextStyles(context)
-                                  .googleRubikFontsForText2(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
+                              style: TextStyles(context).googleRubikFontsForText2(fontSize: 12, fontWeight: FontWeight.w400),
                             ),
                           ),
                         ),
@@ -175,9 +165,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       children: [
                         Text(
                           "Mobile Verification Code",
-                          style: TextStyles(context)
-                              .googleRubikFontsForSecondaryText(
-                                  fontSize: 12, fontWeight: FontWeight.w500),
+                          style: TextStyles(context).googleRubikFontsForSecondaryText(fontSize: 12, fontWeight: FontWeight.w500),
                         )
                       ],
                     ),
@@ -185,28 +173,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       height: 40,
                       child: PinFieldAutoFill(
                         textInputAction: TextInputAction.done,
-                        // autoFocus: true,
-                        // enabled: true,
-                        // enableInteractiveSelection: true,
-                        /*  autoFocus: true,
-                          cursor: Cursor(color: Colors.black,width: 2),
-                          enabled: true,
-                              codeLength: 6,
-                              enableInteractiveSelection: true,
-                              focusNode:FocusNode() ,*/
                         codeLength: 4,
-                        controller: otpTextEditingController,
-                        // focusNode: FocusNode(),
-                        // cursor: Cursor(color:ColorsGroup.primaryColor),
-                        /* decoration: UnderlineDecoration(
-                          textStyle:  TextStyles(context).googleRubikFontsForText(fontSize: 16,fontWeight: FontWeight.w500),
-                          colorBuilder: const FixedColorBuilder(
-                            Colors.transparent,
-                          ),
-                          bgColorBuilder: const FixedColorBuilder(
-                            Color(0xFFF4F6F9),
-                          ),
-                        ),*/
+                        controller: mobileOtpTextEditingController,
                         decoration: BoxLooseDecoration(
                             radius: const Radius.circular(10),
                             strokeColorBuilder: const FixedColorBuilder(
@@ -216,25 +184,31 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               Color(0xFFF4F6F9),
                             ),
                             gapSpace: 12.67),
-                        currentCode: "",
+                        currentCode: mobileOtp,
                         onCodeSubmitted: (code) {
                           debugPrint("onCodeSubmitted $code");
-                          otpTextEditingController.text = code;
+                          if (code.toString().length == 4) {
+                            debugPrint("onCodeSubmitted $code");
+                            mobileOtp = code ?? "";
+                          }
                         },
-                        onCodeChanged: (code) {},
+                        onCodeChanged: (code) {
+                          if (code.toString().length == 4) {
+                            debugPrint("onCodeSubmitted $code");
+                            mobileOtp = code ?? "";
+                          }
+                        },
                       ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "[+91 9876543210]",
-                          style: TextStyles(context).googleRubikFontsForText(
-                              fontSize: 12, fontWeight: FontWeight.w400),
+                          "[+91 ${argumentData['MobileNumber']}]",
+                          style: TextStyles(context).googleRubikFontsForText(fontSize: 12, fontWeight: FontWeight.w400),
                         ),
                         InkWell(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
                             // NavigationServices(context).gotoLoginScreen();
                           },
@@ -242,10 +216,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Text(
                               "Resend OTP",
-                              style: TextStyles(context)
-                                  .googleRubikFontsForText2(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
+                              style: TextStyles(context).googleRubikFontsForText2(fontSize: 12, fontWeight: FontWeight.w400),
                             ),
                           ),
                         ),
@@ -261,8 +232,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       radius: 30,
                       height: 48,
                       onTap: () {
-                        // NavigationServices(context).gotoTabScreen();
-                        Navigator.pushNamed(context, "/signInScreen");
+                        callVerifyAPi(argumentData['userId']);
                       },
                     ),
                     Expanded(flex: 7, child: Container()),
@@ -273,12 +243,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         Text(
                           "Already Have An Account? ",
                           textAlign: TextAlign.center,
-                          style: TextStyles(context).googleRubikFontsForHeading(
-                              fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyles(context).googleRubikFontsForHeading(fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                         InkWell(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
                             // NavigationServices(context).gotoLoginScreen();
                           },
@@ -286,10 +254,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Text(
                               "Sign In",
-                              style: TextStyles(context)
-                                  .googleRubikFontsForText2(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500),
+                              style: TextStyles(context).googleRubikFontsForText2(fontSize: 14, fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
@@ -303,5 +268,33 @@ class _VerificationScreenState extends State<VerificationScreen> {
         ),
       ),
     );
+  }
+
+  callVerifyAPi(String userId) async {
+    try {
+      Utils.showProgressIndicator();
+      // userId = await sharedPref.getKey("userId")??"";
+
+      Map<String, dynamic> postData = {
+        "userId": userId??"",
+        "EmailAddressOTP": emailOtp,
+        "MobileNumberOTP": mobileOtp
+      };
+      debugPrint(">>>>>>postData$postData");
+      HttpMethodsDio().postMethod(api:ApiEndPoint.verifySignInOTP, fun: (map,code) {
+        Utils.disMissProgressIndicator();
+        if(code == 200){
+          Navigator.pushNamed(context, "/signInScreen");
+        }else if(map is Map && map.containsKey("message")){
+          ShowSnackBar.showError(context, map["message"]??"Something went wrong");
+        }else{
+          ShowSnackBar.showError(context, "$map");
+        }
+
+      }, json: postData);
+    } catch (e) {
+      Utils.disMissProgressIndicator();
+      debugPrint(">>>>>>>>>>exception$e");
+    }
   }
 }

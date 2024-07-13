@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.0 <4.0.0'
+  sdk: '>=3.2.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -44,6 +44,9 @@ dependencies:
   dio:
   flutter_easyloading:
   provider:
+  shared_preferences:
+  flutter_advanced_drawer:
+  cached_network_image:
 #  numberpicker:
 #  animated_weight_picker:
 
@@ -58,6 +61,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   flutter_launcher_icons:
+
 #  flutter_provider:
 
 # For information on the generic Dart part of this file, see the
@@ -80,6 +84,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/icon/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

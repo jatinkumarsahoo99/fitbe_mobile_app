@@ -88,12 +88,12 @@ class _CommonPasswordTextFieldViewState extends State<CommonPasswordTextFieldVie
                     fillColor: const Color(0xFFF4F6F9),
                     contentPadding: const EdgeInsets.only(left: 16,right: 0,top: 9,bottom: 9),
                     filled: true,
-                    suffixIcon: InkWell(
+                    suffixIcon: GestureDetector(
                         onTap: (){
                           isVisible = !isVisible;
                           setState(() {});
                         },
-                        child: Icon((isVisible)? Icons.visibility_outlined:Icons.visibility_off_outlined,size: 20,))
+                        child: Icon((isVisible)? Icons.visibility_outlined:Icons.visibility_off_outlined,size: 20,color: const Color(0xFF2CBFD3),))
                 ),
                 keyboardType: widget.keyboardType,
               ),

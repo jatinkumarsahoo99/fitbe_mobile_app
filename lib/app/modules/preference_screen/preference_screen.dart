@@ -1,10 +1,14 @@
 // import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
+import 'package:fitbe/app/common_widgets/show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../app_theme/colors.dart';
 import '../../app_theme/text_styles.dart';
 // import '../../common_widgets/circular_scroll_physics/cicular_scroll_physics.dart';
+import '../../app_utils/shared_preferance.dart';
 import '../../common_widgets/animated_number_picker.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/header_text_widget.dart';
@@ -23,8 +27,15 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
   var pageController = PageController(initialPage: 0);
   int currentShowIndex = 0;
   int selectAge = 10;
-  int selectWeight = 10;
+  String selectWeight = "";
   int selectHeight = 10;
+  int selectHipSize = 10;
+  int selectWaistSize = 10;
+  bool selectHipSizeTap = false;
+  bool selectWaistSizeTap = false;
+  bool selectAgeTap = false;
+  bool selectWeightTap = false;
+  bool selectHeightTap = false;
 
   @override
   void initState() {
@@ -47,6 +58,7 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
     );
 
   }
+  String ? selectGender ;
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +132,10 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                       GenderScreen(
                         onTap: (index) {
                           debugPrint(">>>>>>>>>>>>>Index$index");
+                          selectGender = (index == 1)?"Male":"Female";
+                          setState(() {
+
+                          });
                         },
                       ),
                       Column(
@@ -128,6 +144,7 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                             child: AnimatedNumberPicker(onChange: (int selectedItem) {
                               debugPrint(">>>>>>>>>>>>>onChangeData$selectedItem");
                               selectAge = selectedItem;
+                              selectAgeTap = true;
                             },key: UniqueKey(),maxNum: 200,minNum: 0,suffix: "",selectedItemScrollPosition:selectAge ,),
                           ),
                         ],
@@ -138,6 +155,7 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                             child: AnimatedNumberPicker(onChange: (int selectedItem) {
                               debugPrint(">>>>>>>>>>>>>onChangeData$selectedItem");
                               selectHeight = selectedItem;
+                              selectHeightTap = true;
                             },key: UniqueKey(),maxNum: 200,minNum: 0,suffix: " cm",selectedItemScrollPosition:selectHeight ,),
                           ),
                         ],
@@ -152,7 +170,8 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                               subIntervalAt: 3,
                               showSelectedValue: true,
                               onChange: (newValue) {
-                                setState(() {});
+                                selectWeight = newValue;
+                                selectWeightTap = true;
                               },
                             ),
                           ),
@@ -166,14 +185,15 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                               children: [
                                 Expanded(
                                     child: Image.asset(
-                                  "assets/images/female_hip.png",
+                                  "assets/images/${(selectGender == "Female")?"female_hip":"man_hip"}.png",
                                   height: 300,
                                 )),
                                 Expanded(
                                   child: AnimatedNumberPicker(onChange: (int selectedItem) {
                                     debugPrint(">>>>>>>>>>>>>onChangeData$selectedItem");
-                                    selectHeight = selectedItem;
-                                  },key: UniqueKey(),maxNum: 200,minNum: 0,suffix: " cm",selectedItemScrollPosition:selectHeight ,),
+                                    selectHipSize = selectedItem;
+                                    selectHipSizeTap = true;
+                                  },key: UniqueKey(),maxNum: 200,minNum: 0,suffix: " cm",selectedItemScrollPosition:selectHipSize ,),
                                 ),
                               ],
                             ),
@@ -188,14 +208,15 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                               children: [
                                 Expanded(
                                     child: Image.asset(
-                                      "assets/images/female_waist.png",
+                                      "assets/images/${(selectGender == "Female")?"female_waist":"man_waist"}.png",
                                       height: 300,
                                     )),
                                 Expanded(
                                   child: AnimatedNumberPicker(onChange: (int selectedItem) {
                                     debugPrint(">>>>>>>>>>>>>onChangeData$selectedItem");
-                                    selectHeight = selectedItem;
-                                  },key: UniqueKey(),maxNum: 200,minNum: 0,suffix: " cm",selectedItemScrollPosition:selectHeight ,),
+                                    selectWaistSize = selectedItem;
+                                    selectWaistSizeTap = true;
+                                  },key: UniqueKey(),maxNum: 200,minNum: 0,suffix: " cm",selectedItemScrollPosition:selectWaistSize ,),
                                 ),
                               ],
                             ),
@@ -210,14 +231,39 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                 backgroundColor: const Color(0xFF2CBFD3),
                 radius: 30,
                 height: 48,
-                onTap: () {
-                  if((currentShowIndex + 1) < 6) {
-                    pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut);
-                  }else{
-                    Navigator.pushNamed(context, "/recommendationScreen");
+                onTap: () async {
+                  if(selectGender == null && currentShowIndex == 0){
+                    ShowSnackBar.showError(context, "Please select your gender");
+                  }else if(!selectAgeTap&& currentShowIndex == 1){
+                    ShowSnackBar.showError(context, "Please select your age");
+                  }else if(!selectHeightTap && currentShowIndex == 2){
+                    ShowSnackBar.showError(context, "Please select your height");
+                  }else if(!selectWeightTap && currentShowIndex == 3){
+                    ShowSnackBar.showError(context, "Please select your weight");
+                  }else if(!selectHipSizeTap && currentShowIndex == 4){
+                    ShowSnackBar.showError(context, "Please select your hip");
+                  }else if(!selectWaistSizeTap && currentShowIndex == 5){
+                    ShowSnackBar.showError(context, "Please select your waist");
+                  }else {
+                    if ((currentShowIndex + 1) < 6) {
+                      pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut);
+                    } else {
+                      Map userDetails = {
+                        "gender":selectGender,
+                        "age":selectAge,
+                        "height":selectHeight,
+                        "weight":selectWeight,
+                        "hip":selectHipSize,
+                        "waist":selectWaistSize
+                      };
+                      SharedPref sharedPref = SharedPref();
+                      await sharedPref.save("userData", json.encode(userDetails));
+                      Navigator.pushNamed(context, "/recommendationScreen");
+                    }
                   }
+
                   // NavigationServices(context).gotoTabScreen();
                   // Navigator.pushNamed(context, "/preferenceScreen");
                 },

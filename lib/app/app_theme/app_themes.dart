@@ -27,7 +27,8 @@ class AppTheme{
       scaffoldBackgroundColor: ColorsGroup.scaffoldBackgroundColor,
       focusColor: ColorsGroup.primaryColor,
       primaryColor: ColorsGroup.primaryColor,
-      useMaterial3: true
+      useMaterial3: true,
+        primarySwatch:Colors.blue,
     );
   }
 

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
+import '../../app_api_services/api_end_point.dart';
+import '../../app_api_services/http_methods.dart';
 import '../../app_theme/text_styles.dart';
+import '../../app_utils/utils.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/header_text_widget.dart';
 import '../../common_widgets/remove_focuse.dart';
+import '../../common_widgets/show_snack_bar.dart';
 
 class ForgotPasswordOtp extends StatefulWidget {
   const ForgotPasswordOtp({super.key});
@@ -15,14 +19,16 @@ class ForgotPasswordOtp extends StatefulWidget {
 
 class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
   TextEditingController otpTextEditingController = TextEditingController();
+  String otpVal = "";
+  Map<String, dynamic> argumentData = {};
 
   @override
   Widget build(BuildContext context) {
+    argumentData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
     Size size = MediaQuery.of(context).size;
 
-    double usableHeight = size.height -
-        MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom;
+    double usableHeight = size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
     return Scaffold(
       body: RemoveFocuse(
         onClick: () {
@@ -47,8 +53,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                           },
                           child: Container(
                               decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.grey, width: 0.1),
+                                border: Border.all(color: Colors.grey, width: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                                 // color: const Color(0xFFD9D9D9)
                               ),
@@ -63,20 +68,16 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                       ],
                     ),
                     Expanded(flex: 1, child: Container()),
-
                     HeaderTextWidget(
                       headerText: "Verification",
                       headDesc: "Enter Verification Codes to Confirm.",
                       key: UniqueKey(),
                     ),
-
                     Row(
                       children: [
                         Text(
                           "Email Verification Code",
-                          style: TextStyles(context)
-                              .googleRubikFontsForSecondaryText(
-                                  fontSize: 12, fontWeight: FontWeight.w500),
+                          style: TextStyles(context).googleRubikFontsForSecondaryText(fontSize: 12, fontWeight: FontWeight.w500),
                         )
                       ],
                     ),
@@ -95,25 +96,32 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                               Color(0xFFF4F6F9),
                             ),
                             gapSpace: 12.67),
-                        currentCode: "",
+                        currentCode: otpVal,
                         onCodeSubmitted: (code) {
-                          debugPrint("onCodeSubmitted $code");
-                          otpTextEditingController.text = code;
+                          if (code.toString().length == 4) {
+                            debugPrint("onCodeSubmitted $code");
+                            otpTextEditingController.text = code;
+                            otpVal = code;
+                          }
                         },
-                        onCodeChanged: (code) {},
+                        onCodeChanged: (code) {
+                          if (code.toString().length == 4) {
+                            debugPrint("onCodeSubmitted $code");
+                            otpTextEditingController.text = code ?? "";
+                            otpVal = code ?? "";
+                          }
+                        },
                       ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "[jatinkumarsahoo99@gmail.com]",
-                          style: TextStyles(context).googleRubikFontsForText(
-                              fontSize: 12, fontWeight: FontWeight.w400),
+                          "[${argumentData['id']}]",
+                          style: TextStyles(context).googleRubikFontsForText(fontSize: 12, fontWeight: FontWeight.w400),
                         ),
                         InkWell(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
                             // NavigationServices(context).gotoLoginScreen();
                           },
@@ -121,10 +129,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                             padding: const EdgeInsets.all(4.0),
                             child: Text(
                               "Resend OTP",
-                              style: TextStyles(context)
-                                  .googleRubikFontsForText2(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
+                              style: TextStyles(context).googleRubikFontsForText2(fontSize: 12, fontWeight: FontWeight.w400),
                             ),
                           ),
                         ),
@@ -141,7 +146,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                       height: 48,
                       onTap: () {
                         // NavigationServices(context).gotoTabScreen();
-                        Navigator.pushNamed(context, "/preferenceScreen");
+                        verifyOtp();
                       },
                     ),
                     Expanded(flex: 7, child: Container()),
@@ -152,12 +157,10 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                         Text(
                           "Already Have An Account? ",
                           textAlign: TextAlign.center,
-                          style: TextStyles(context).googleRubikFontsForHeading(
-                              fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyles(context).googleRubikFontsForHeading(fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                         InkWell(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
                             // NavigationServices(context).gotoLoginScreen();
                           },
@@ -165,10 +168,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                             padding: const EdgeInsets.all(4.0),
                             child: Text(
                               "Sign In",
-                              style: TextStyles(context)
-                                  .googleRubikFontsForText2(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500),
+                              style: TextStyles(context).googleRubikFontsForText2(fontSize: 14, fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
@@ -182,5 +182,33 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
         ),
       ),
     );
+  }
+
+  verifyOtp() {
+    try {
+      Utils.showProgressIndicator();
+      // userId = await sharedPref.getKey("userId")??"";
+
+      Map<String, dynamic> postData = argumentData['isMobile']
+          ? {"EmailAddress": argumentData['id'], "OTP": "3335"}
+          : {"MobileNumber": argumentData['id'], "OTP": "3335"};
+      debugPrint(">>>>>>postData$postData");
+      HttpMethodsDio().postMethod(
+          api: ApiEndPoint.forGotPasswordVerifyOtp,
+          fun: (map, code) {
+            Utils.disMissProgressIndicator();
+            if (code == 200) {
+              Navigator.pushNamed(context, "/changePassword");
+            } else if (map is Map && map.containsKey("message")) {
+              ShowSnackBar.showError(context, map["message"] ?? "Something went wrong");
+            } else {
+              ShowSnackBar.showError(context, "$map");
+            }
+          },
+          json: postData);
+    } catch (e) {
+      Utils.disMissProgressIndicator();
+      debugPrint(">>>>>>>>>>exception$e");
+    }
   }
 }

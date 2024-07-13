@@ -1,9 +1,13 @@
 import 'package:fitbe/app/app_utils/utils.dart';
 import 'package:fitbe/app/modules/signup_screen/provider/sign_up_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
+import '../../app_api_services/api_end_point.dart';
+import '../../app_api_services/http_methods.dart';
 import '../../app_theme/text_styles.dart';
+import '../../app_utils/shared_preferance.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_password_text_field.dart';
 import '../../common_widgets/common_text_field_view.dart';
@@ -31,15 +35,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  bool isCheck = true;
+  bool isCheck = false;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    double usableHeight = size.height -
-        MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom;
+    double usableHeight = size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
     return Scaffold(
       body: RemoveFocuse(
         onClick: () {
@@ -94,6 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     hintText: "Mobile Number",
                     keyboardType: TextInputType.number,
+                    maxLength: 10,
                     onChanged: (String txt) {},
                   ),
                   const SizedBox(
@@ -123,8 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             isCheck = !isCheck;
                             setState(() {});
                           },
-                          visualDensity:
-                              const VisualDensity(horizontal: -4, vertical: -4),
+                          visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                           activeColor: const Color(0xFF2CBFD3),
                         ),
                         const SizedBox(
@@ -132,16 +134,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         Text(
                           "I Agree With",
-                          style: TextStyles(context).googleRubikFontsForHeading(
-                              fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyles(context).googleRubikFontsForHeading(fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                         const SizedBox(
                           width: 8,
                         ),
                         Text(
                           "Terms & Conditions",
-                          style: TextStyles(context)
-                              .googleRubikFontsForText2(fontSize: 14),
+                          style: TextStyles(context).googleRubikFontsForText2(fontSize: 14),
                         ),
                       ],
                     ),
@@ -153,8 +153,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     buttonText: "SignUp",
                     onTap: () {
-                      if(validate()) {
-                        Navigator.pushNamed(context, "/signInScreen");
+                      if (validate()) {
+                        callSignUpApi();
+
                       }
                       // NavigationServices(context).gotoTabScreen();
                     },
@@ -167,12 +168,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Text(
                         "Already Have An Account? ",
                         textAlign: TextAlign.center,
-                        style: TextStyles(context).googleRubikFontsForHeading(
-                            fontSize: 14, fontWeight: FontWeight.w400),
+                        style: TextStyles(context).googleRubikFontsForHeading(fontSize: 14, fontWeight: FontWeight.w400),
                       ),
                       InkWell(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
+                        borderRadius: const BorderRadius.all(Radius.circular(8)),
                         onTap: () {
                           Navigator.pushNamed(context, "/signInScreen");
                         },
@@ -180,8 +179,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
                             "Sign In",
-                            style: TextStyles(context).googleRubikFontsForText2(
-                                fontSize: 14, fontWeight: FontWeight.w500),
+                            style: TextStyles(context).googleRubikFontsForText2(fontSize: 14, fontWeight: FontWeight.w500),
                           ),
                         ),
                       ),
@@ -196,41 +194,68 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  bool validate(){
-    if(fullNameController.text == ""){
+  bool validate() {
+    if (fullNameController.text == "") {
       ShowSnackBar.showError(context, "Please enter the full name");
-    }
-    else if(emailIdController.text == ""){
+    } else if (emailIdController.text == "") {
       ShowSnackBar.showError(context, "Please enter the email");
-    }else if(emailIdController.text.isValidEmail()){
+    } else if (!emailIdController.text.isValidEmail()) {
       ShowSnackBar.showError(context, "Please enter the valid email");
-    }else if(mobileController.text == ""){
+    } else if (mobileController.text == "") {
       ShowSnackBar.showError(context, "Please enter the mobile");
-    }else if(mobileController.text.length < 10){
+    } else if (mobileController.text.length < 10) {
       ShowSnackBar.showError(context, "Please enter the valid mobile no");
-    }else if(passwordController.text == ""){
+    } else if (passwordController.text == "") {
       ShowSnackBar.showError(context, "Please enter your password");
-    }else{
+    } else if(isCheck == false){
+      ShowSnackBar.showError(context, "Please accept term & condition");
+    }else {
       return true;
     }
     return false;
   }
 
-  bool checkUserId(String userId){
-    try{
-      if(double.parse(userId).runtimeType == double && userId.length == 10){
+  bool checkUserId(String userId) {
+    try {
+      if (double.parse(userId).runtimeType == double && userId.length == 10) {
         return true;
-      }else{
+      } else {
         return false;
       }
-    }catch(e){
-      if(userId.isValidEmail()){
+    } catch (e) {
+      if (userId.isValidEmail()) {
         return true;
-      }else{
+      } else {
         return false;
       }
       debugPrint(">>>>>>>>>>>>>exception$e");
     }
   }
-
+  callSignUpApi() {
+    try {
+      Utils.showProgressIndicator();
+      Map<String, dynamic> postData = {
+        "FullName": fullNameController.text,
+        "EmailAddress": emailIdController.text,
+        "MobileNumber": mobileController.text,
+        "Password":passwordController.text,
+        "DateOfBirth": "1998-08-20",
+      };
+      HttpMethodsDio().postMethod(api: ApiEndPoint.signUpUrl, json: postData, fun: (map,code)  {
+        Utils.disMissProgressIndicator();
+        if(map is Map && map.containsKey("data") && map['data'] is Map && map['data'].containsKey("userId")) {
+          // await sharedPref.save("userId",map['data']["userId"] );
+          postData['userId'] = map['data']["userId"];
+          Navigator.pushNamed(context, "/verificationScreen",arguments: postData,);
+        }else if(map is Map && map.containsKey("message")){
+          ShowSnackBar.showError(context, map["message"]??"Something went wrong");
+        }else{
+          ShowSnackBar.showError(context, "$map");
+        }
+      });
+    }catch(e){
+      debugPrint("exception:$e");
+      Utils.disMissProgressIndicator();
+    }
+  }
 }
