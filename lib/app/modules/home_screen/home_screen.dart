@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fitbe/app/app_utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +23,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, SingleTickerProviderStateMixin, Helper {
   late AdvancedDrawerController advancedDrawerController;
   AnimationController? animationController;
-
+  SharedPref sharedPref = SharedPref();
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     advancedDrawerController = AdvancedDrawerController();
     animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
     super.initState();
+  }
+  Map<String, dynamic>? logInData;
+  getLogInData() async {
+    var logInData = await sharedPref.getKey("logInData");
+    if (logInData != null && logInData != "" && logInData != "null") {
+      logInData = json.decode(json.decode(logInData));
+      setState(() {
+
+      });
+    }
   }
 
   @override
@@ -109,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
                             height: 05,
                           ),
                           Text(
-                            "9178109440",
+                            logInData?["MobileNumber"]??"9178109440",
                             style: TextStyles(context).getBoldStyle().copyWith(fontSize: 12),
                             maxLines: 2,
                           ),
@@ -117,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
                             height: 05,
                           ),
                           Text(
-                            "jatinkumarsahoo99@gmail.com",
+                            logInData?["EmailAddress"]??"jatinkumarsahoo99@gmail.com",
                             style: TextStyles(context).getBoldStyle().copyWith(fontSize: 12),
                             maxLines: 2,
                           ),

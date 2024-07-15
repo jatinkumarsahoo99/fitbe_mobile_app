@@ -192,15 +192,21 @@ class _SigninScreenState extends State<SigninScreen> with Helper {
             if (map is Map) {
               if (map.containsKey("data") && map['data'] is Map && map["data"]['Status'] == "VERIFICATION_COMPLETED") {
                 postData['userId'] = map['data']["UserID"];
+                postData['EmailAddress'] = map['data']["EmailAddress"];
+                postData['MobileNumber'] = map['data']["MobileNumber"];
                 setLogInData(postData: postData, logInStatus: map["data"]['Status']);
                 // EasyLoading.showSuccess("Done");
                 Navigator.pushNamed(context, "/preferenceScreen");
               } else if (map.containsKey("data") && map['data'] is Map && map["data"]['Status'] == "VERIFICATION_PENDING") {
                 postData['userId'] = map['data']["UserID"];
+                postData['EmailAddress'] = map['data']["EmailAddress"];
+                postData['MobileNumber'] = map['data']["MobileNumber"];
                 setLogInData(postData: postData, logInStatus: map["data"]['Status']);
                 openDialog(postData);
               } else if (map.containsKey("data") && map['data'] is Map && map["data"]['Status'] == "COMPLETED") {
                 postData['userId'] = map['data']["UserID"];
+                postData['EmailAddress'] = map['data']["EmailAddress"];
+                postData['MobileNumber'] = map['data']["MobileNumber"];
                 setLogInData(postData: postData, logInStatus: map["data"]['Status']);
                 Navigator.pushNamed(context, "/homeScreen");
               } else if (map.containsKey("message")) {

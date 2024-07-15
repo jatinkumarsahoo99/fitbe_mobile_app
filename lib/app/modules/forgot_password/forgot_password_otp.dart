@@ -196,15 +196,17 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
       Utils.showProgressIndicator();
       // userId = await sharedPref.getKey("userId")??"";
 
-      Map<String, dynamic> postData = argumentData['isMobile']
-          ? {"EmailAddress": argumentData['id'], "OTP": "3335"}
-          : {"MobileNumber": argumentData['id'], "OTP": "3335"};
+      Map<String, dynamic> postData = (!argumentData['isMobile'])
+          ? {"EmailAddress": argumentData['id'], "OTP": otpVal}
+          : {"MobileNumber": argumentData['id'], "OTP": otpVal};
       debugPrint(">>>>>>postData$postData");
       HttpMethodsDio().postMethod(
           api: ApiEndPoint.forGotPasswordVerifyOtp,
           fun: (map, code) {
             Utils.disMissProgressIndicator();
             if (code == 200) {
+               postData.remove("OTP") ;
+              debugPrint(">>>>>>postData$postData");
               Navigator.pushNamed(context, "/changePassword",arguments: postData);
             } else if (map is Map && map.containsKey("message")) {
               ShowSnackBar.showError(context, map["message"] ?? "Something went wrong");
@@ -227,6 +229,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
       }:{
         "MobileNumber": argumentData['id']
       };
+      debugPrint(">>>postData$postData");
       Utils.disMissProgressIndicator();
       HttpMethodsDio().postMethod(api:ApiEndPoint.forgotPasswordSendVerification, fun: (map,code) {
         // Navigator.pushNamed(context, "/forgotPasswordOtp");

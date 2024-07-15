@@ -166,11 +166,11 @@ class HttpMethodsDio {
           fun(failedMap,1000);
           break;
         case DioErrorType.badResponse:
-          fun(e.response?.data);
+          fun(e.response?.data??{},e.response?.statusCode);
         case DioExceptionType.badCertificate:
-        // TODO: Handle this case.
+          fun(failedMap,e.response?.statusCode);
         case DioExceptionType.connectionError:
-        // TODO: Handle this case.
+          fun(failedMap,e.response?.statusCode);
       }
     }
   }
@@ -186,14 +186,14 @@ class HttpMethodsDio {
       );
       if (response.statusCode == 200) {
         try {
-          fun(response.data);
+          fun(response.data,response.statusCode);
         } catch (e) {
           if (kDebugMode) {
             print("Message is: $e");
           }
         }
       } else {
-        fun(failedMap);
+        fun(failedMap,response.statusCode);
       }
     } on DioError catch (e) {
       switch (e.type) {
@@ -202,14 +202,14 @@ class HttpMethodsDio {
         case DioErrorType.sendTimeout:
         case DioErrorType.receiveTimeout:
         case DioErrorType.unknown:
-          fun(failedMap);
+          fun(failedMap,e.response?.statusCode);
           break;
         case DioErrorType.badResponse:
-          fun(e.response?.data);
+          fun(e.response?.data,e.response?.statusCode);
         case DioExceptionType.badCertificate:
-        // TODO: Handle this case.
+          fun(failedMap,e.response?.statusCode);
         case DioExceptionType.connectionError:
-        // TODO: Handle this case.
+          fun(failedMap,e.response?.statusCode);
       }
     }
   }

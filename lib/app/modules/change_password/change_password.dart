@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app_api_services/api_end_point.dart';
 import '../../app_api_services/http_methods.dart';
 import '../../app_theme/text_styles.dart';
+import '../../app_utils/utils.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_password_text_field.dart';
 import '../../common_widgets/remove_focuse.dart';
@@ -39,17 +40,16 @@ class _ChangePasswordState extends State<ChangePassword> {
                     height: 8,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left:16.0,right: 16),
+                    padding: const EdgeInsets.only(left: 16.0, right: 16),
                     child: Row(
                       children: [
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             Navigator.pop(context);
                           },
                           child: Container(
                               decoration: BoxDecoration(
-                                border:
-                                Border.all(color: Colors.grey, width: 0.1),
+                                border: Border.all(color: Colors.grey, width: 0.1),
                                 borderRadius: BorderRadius.circular(20),
                                 // color: const Color(0xFFD9D9D9)
                               ),
@@ -64,46 +64,42 @@ class _ChangePasswordState extends State<ChangePassword> {
                       ],
                     ),
                   ),
-                  Expanded(
-                      flex: 3,
-                      child:Container()),
+                  Expanded(flex: 3, child: Container()),
                   Padding(
-                    padding: const EdgeInsets.only(left: 76.0,right: 76,top: 0,bottom: 0),
+                    padding: const EdgeInsets.only(left: 76.0, right: 76, top: 0, bottom: 0),
                     child: Text(
                       "Change Password",
                       textAlign: TextAlign.center,
-                      style: TextStyles(context).googleRubikFontsForHeading(fontSize: 18,fontWeight: FontWeight.w500),
+                      style: TextStyles(context).googleRubikFontsForHeading(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(
                     height: 8,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 16.0,right: 16,top: 0,bottom: 0),
+                    padding: const EdgeInsets.only(left: 16.0, right: 16, top: 0, bottom: 0),
                     child: Text(
                       "Enter New Password",
                       textAlign: TextAlign.center,
-                      style: TextStyles(context).googleRubikFontsForText(fontSize: 10,fontWeight: FontWeight.w400),
+                      style: TextStyles(context).googleRubikFontsForText(fontSize: 10, fontWeight: FontWeight.w400),
                     ),
                   ),
                   const SizedBox(
                     height: 24,
                   ),
                   CommonPasswordTextFieldView(
-                    titleText:"New Password",
-                    padding: const EdgeInsets.only(
-                        left: 16, right: 16),
-                    hintText:"New Password",
+                    titleText: "New Password",
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    hintText: "New Password",
                     isObscureText: true,
                     onChanged: (String txt) {},
                     errorText: null,
                     controller: passwordTextEditingController,
                   ),
                   CommonPasswordTextFieldView(
-                    titleText:"Confirm New Password",
-                    padding: const EdgeInsets.only(
-                        left: 16, right: 16),
-                    hintText:"Confirm New Password",
+                    titleText: "Confirm New Password",
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    hintText: "Confirm New Password",
                     isObscureText: true,
                     onChanged: (String txt) {},
                     errorText: null,
@@ -112,10 +108,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                   const SizedBox(
                     height: 40,
                   ),
-
                   CommonButton(
-                    padding:
-                    const EdgeInsets.only(left: 16, right: 16),
+                    padding: const EdgeInsets.only(left: 16, right: 16),
                     buttonText: "Create New Password",
                     onTap: () {
                       validate();
@@ -123,9 +117,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       // NavigationServices(context).gotoTabScreen();
                     },
                   ),
-                  Expanded(
-                      flex: 7,
-                      child:Container()),
+                  Expanded(flex: 7, child: Container()),
                 ],
               ),
             ),
@@ -135,29 +127,37 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 
-  validate(){
-    if(passwordTextEditingController.text.trim() == ""){
+  validate() {
+    if (passwordTextEditingController.text.trim() == "") {
       ShowSnackBar.showError(context, "Please enter the password");
-    }else if(confirmPasswordTextEditingController.text.trim() == ""){
+    } else if (confirmPasswordTextEditingController.text.trim() == "") {
       ShowSnackBar.showError(context, "Please enter the confirm password");
-    }else if(passwordTextEditingController.text != confirmPasswordTextEditingController.text){
+    } else if (passwordTextEditingController.text != confirmPasswordTextEditingController.text) {
       ShowSnackBar.showError(context, "Password and confirm password should be same");
-    }else{
+    } else {
       callChangePasswordApi();
     }
   }
 
-  callChangePasswordApi(){
-    Map<String, dynamic> argumentData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    argumentData['password'] = passwordTextEditingController.text.trim() ;
-    HttpMethodsDio().postMethod(api: ApiEndPoint.signUpUrl, json: argumentData, fun: (map,code) {
-      if(code == 200) {
-        Navigator.pushNamed(context, "/signInScreen");
-      }else{
-        ShowSnackBar.showError(context, "$map");
-      }
-    });
+  callChangePasswordApi() {
+    try {
+      Utils.showProgressIndicator();
+      Map<String, dynamic> argumentData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      argumentData['Password'] = passwordTextEditingController.text.trim();
+      debugPrint(">>>>>>argumentData$argumentData");
+      HttpMethodsDio().putMethod(
+          api: ApiEndPoint.changePassword,
+          post: argumentData,
+          fun: (map, code) {
+            Utils.disMissProgressIndicator();
+            if (code == 200) {
+              Navigator.pushNamed(context, "/signInScreen");
+            } else {
+              ShowSnackBar.showError(context, "$map");
+            }
+          });
+    } catch (e) {
+      Utils.disMissProgressIndicator();
+    }
   }
-
-
 }

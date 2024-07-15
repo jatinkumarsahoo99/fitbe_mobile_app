@@ -26,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen> with Helper {
     String? isLogIn = await sharedPref.getKey("isLogIn");
     String? logInSta = await sharedPref.getKey("logInSta");
     var logInData = await sharedPref.getKey("logInData");
+    var userPrefData = await sharedPref.getKey("userData");
 
     if (isLogIn.toString().contains("true")) {
       if (logInSta.toString().contains("VERIFICATION_PENDING")) {
@@ -40,11 +41,22 @@ class _SplashScreenState extends State<SplashScreen> with Helper {
       } else if (logInSta.toString().trim() == ("COMPLETED")) {
         Navigator.pushNamed(context, "/homeScreen");
       } else if (logInSta.toString().contains("VERIFICATION_COMPLETED")) {
-        Navigator.pushNamed(context, "/preferenceScreen");
+        if (userPrefData != null && userPrefData != "" && userPrefData != "null") {
+          try{
+            Map<String, dynamic> mapData = json.decode(json.decode(userPrefData));
+            Navigator.pushNamed(context, "/homeScreen",arguments: mapData);
+          }catch(e){
+            Navigator.pushNamed(context, "/preferenceScreen");
+          }
+        }else{
+          Navigator.pushNamed(context, "/preferenceScreen");
+        }
+
       } else {
         Navigator.pushReplacementNamed(context, "/introScreen");
       }
-    }else{
+    }
+    else{
       Navigator.pushReplacementNamed(context, "/introScreen");
     }
 

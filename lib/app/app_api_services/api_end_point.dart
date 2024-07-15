@@ -10,6 +10,6 @@ class ApiEndPoint{
   static String userSignIn = "$baseUrl/user/signIn";
   static String forgotPasswordSendVerification = "$baseUrl/forgotPassword/sendVerification";
   static String forGotPassword(String ? id) => "$baseUrl/user/forgotPassword/$id";
-  static String changePassword(String ? id) => "$baseUrl/user/updatePassword/$id";
+  static String changePassword  = "$baseUrl/forgotPassword/updatePassword";
 
 }
