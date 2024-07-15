@@ -111,12 +111,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       InkWell(
                         borderRadius: const BorderRadius.all(Radius.circular(8)),
                         onTap: () {
-                          // NavigationServices(context).gotoLoginScreen();
+                          Navigator.pushNamed(context, "/signInScreen");
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            "Sign Up",
+                            "Sign In",
                             style:TextStyles(context).googleRubikFontsForText2(fontSize: 14,fontWeight: FontWeight.w500),
                           ),
                         ),
@@ -168,5 +168,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       debugPrint(">>>>>>>>>>exception$e");
     }
   }
+
 
 }

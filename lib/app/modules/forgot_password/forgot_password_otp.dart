@@ -123,7 +123,12 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                         InkWell(
                           borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
-                            // NavigationServices(context).gotoLoginScreen();
+                            otpVal = "";
+                            otpTextEditingController.text="";
+                            setState(() {
+
+                            });
+                            sendOtp();
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -145,6 +150,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                       radius: 30,
                       height: 48,
                       onTap: () {
+
                         // NavigationServices(context).gotoTabScreen();
                         verifyOtp();
                       },
@@ -162,6 +168,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                         InkWell(
                           borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
+                            sendOtp();
                             // NavigationServices(context).gotoLoginScreen();
                           },
                           child: Padding(
@@ -198,7 +205,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
           fun: (map, code) {
             Utils.disMissProgressIndicator();
             if (code == 200) {
-              Navigator.pushNamed(context, "/changePassword");
+              Navigator.pushNamed(context, "/changePassword",arguments: postData);
             } else if (map is Map && map.containsKey("message")) {
               ShowSnackBar.showError(context, map["message"] ?? "Something went wrong");
             } else {
@@ -211,4 +218,28 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
       debugPrint(">>>>>>>>>>exception$e");
     }
   }
+
+  sendOtp(){
+    try {
+      Utils.showProgressIndicator();
+      Map<String, dynamic> postData = (Utils.checkIsDouble(argumentData['id']) == false)?{
+        "EmailAddress": argumentData['id']
+      }:{
+        "MobileNumber": argumentData['id']
+      };
+      Utils.disMissProgressIndicator();
+      HttpMethodsDio().postMethod(api:ApiEndPoint.forgotPasswordSendVerification, fun: (map,code) {
+        // Navigator.pushNamed(context, "/forgotPasswordOtp");
+        if(code == 200){
+
+        }else{
+          ShowSnackBar.showError(context, "$map");
+        }
+      }, json: postData);
+    } catch (e) {
+      Utils.disMissProgressIndicator();
+      debugPrint(">>>>>>>>>>exception$e");
+    }
+  }
+
 }

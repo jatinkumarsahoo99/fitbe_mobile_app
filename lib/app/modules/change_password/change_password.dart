@@ -143,16 +143,19 @@ class _ChangePasswordState extends State<ChangePassword> {
     }else if(passwordTextEditingController.text != confirmPasswordTextEditingController.text){
       ShowSnackBar.showError(context, "Password and confirm password should be same");
     }else{
-      Navigator.pushNamed(context, "/signInScreen");
       callChangePasswordApi();
     }
   }
 
   callChangePasswordApi(){
-    HttpMethodsDio().postMethod(api: ApiEndPoint.signUpUrl, json: {
-      "password": "new password"
-    }, fun: (map,code) {
-      Navigator.pushNamed(context, "/verificationScreen");
+    Map<String, dynamic> argumentData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    argumentData['password'] = passwordTextEditingController.text.trim() ;
+    HttpMethodsDio().postMethod(api: ApiEndPoint.signUpUrl, json: argumentData, fun: (map,code) {
+      if(code == 200) {
+        Navigator.pushNamed(context, "/signInScreen");
+      }else{
+        ShowSnackBar.showError(context, "$map");
+      }
     });
   }
 

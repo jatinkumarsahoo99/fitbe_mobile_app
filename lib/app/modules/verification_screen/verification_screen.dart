@@ -146,7 +146,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         InkWell(
                           borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
-                            // NavigationServices(context).gotoLoginScreen();
+                            sendOtp();
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -210,7 +210,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         InkWell(
                           borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
-                            // NavigationServices(context).gotoLoginScreen();
+                            sendOtp(isMobile: true);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -248,7 +248,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         InkWell(
                           borderRadius: const BorderRadius.all(Radius.circular(8)),
                           onTap: () {
-                            // NavigationServices(context).gotoLoginScreen();
+                            Navigator.pushNamed(context, "/signInScreen");
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -297,4 +297,29 @@ class _VerificationScreenState extends State<VerificationScreen> {
       debugPrint(">>>>>>>>>>exception$e");
     }
   }
+
+  sendOtp({bool isMobile = false}){
+    try {
+      Utils.showProgressIndicator();
+      Map<String, dynamic> postData = (isMobile == false)?{
+        "EmailAddress": argumentData['EmailAddress']
+      }:{
+        "MobileNumber": argumentData['MobileNumber']
+      };
+      debugPrint(">>>>>>postData$postData");
+      Utils.disMissProgressIndicator();
+      HttpMethodsDio().postMethod(api:ApiEndPoint.forgotPasswordSendVerification, fun: (map,code) {
+        // Navigator.pushNamed(context, "/forgotPasswordOtp");
+        if(code == 200){
+
+        }else{
+          ShowSnackBar.showError(context, "$map");
+        }
+      }, json: postData);
+    } catch (e) {
+      Utils.disMissProgressIndicator();
+      debugPrint(">>>>>>>>>>exception$e");
+    }
+  }
+
 }
