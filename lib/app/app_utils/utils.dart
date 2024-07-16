@@ -25,7 +25,7 @@ class Utils{
           return "Please enter valid mobile no";
         }
       } catch (e) {
-        if (!userId.isValidEmail()) {
+        if (userId.isValidEmail()) {
           return true;
         } else {
           return "Please enter valid email id";

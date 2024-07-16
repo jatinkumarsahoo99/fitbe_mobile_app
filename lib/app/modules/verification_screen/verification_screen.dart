@@ -123,16 +123,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             gapSpace: 12.67),
                         currentCode: emailOtp,
                         onCodeSubmitted: (code) {
-                          if (code.toString().length == 4) {
+                          debugPrint("onCodeSubmitted $code");
+                          emailOtp = code ?? "";
+                          /*if (code.toString().length == 4) {
                             debugPrint("onCodeSubmitted $code");
                             emailOtp = code ?? "";
-                          }
+                          }*/
                         },
                         onCodeChanged: (code) {
-                          if (code.toString().length == 4) {
+                          debugPrint("onCodeSubmitted $code");
+                          emailOtp = code ?? "";
+                          /*if (code.toString().length == 4) {
                             debugPrint("onCodeSubmitted $code");
                             emailOtp = code ?? "";
-                          }
+                          }*/
                         },
                       ),
                     ),
@@ -187,16 +191,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         currentCode: mobileOtp,
                         onCodeSubmitted: (code) {
                           debugPrint("onCodeSubmitted $code");
-                          if (code.toString().length == 4) {
+                          mobileOtp = code ?? "";
+                          /*if (code.toString().length == 4) {
                             debugPrint("onCodeSubmitted $code");
                             mobileOtp = code ?? "";
-                          }
+                          }*/
                         },
                         onCodeChanged: (code) {
-                          if (code.toString().length == 4) {
+                          debugPrint("onCodeSubmitted $code");
+                          mobileOtp = code ?? "";
+                          /*if (code.toString().length == 4) {
                             debugPrint("onCodeSubmitted $code");
                             mobileOtp = code ?? "";
-                          }
+                          }*/
                         },
                       ),
                     ),

@@ -98,18 +98,24 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                             gapSpace: 12.67),
                         currentCode: otpVal,
                         onCodeSubmitted: (code) {
-                          if (code.toString().length == 4) {
+                          debugPrint("onCodeSubmitted $code");
+                          otpTextEditingController.text = code;
+                          otpVal = code;
+                          /*if (code.toString().length == 4) {
                             debugPrint("onCodeSubmitted $code");
                             otpTextEditingController.text = code;
                             otpVal = code;
-                          }
+                          }*/
                         },
                         onCodeChanged: (code) {
-                          if (code.toString().length == 4) {
+                          debugPrint("onCodeSubmitted $code");
+                          otpTextEditingController.text = code ?? "";
+                          otpVal = code ?? "";
+                          /*if (code.toString().length == 4) {
                             debugPrint("onCodeSubmitted $code");
                             otpTextEditingController.text = code ?? "";
                             otpVal = code ?? "";
-                          }
+                          }*/
                         },
                       ),
                     ),
