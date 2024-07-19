@@ -36,28 +36,35 @@ class _SplashScreenState extends State<SplashScreen> with Helper {
           openDialog(map);
         } else {
           await sharedPref.save("isLogIn", "false");
-          Navigator.pushReplacementNamed(context, "/introScreen");
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            "/introScreen",
+            (Route<dynamic> route) => false,
+          );
         }
-      } else if (logInSta.toString().trim() == ("COMPLETED")) {
-        Navigator.pushNamed(context, "/homeScreen");
+      } else if ((jsonDecode(logInSta ?? "")).toString().trim() == "COMPLETED") {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          "/homeScreen",
+          (Route<dynamic> route) => false,
+        );
       } else if (logInSta.toString().contains("VERIFICATION_COMPLETED")) {
         if (userPrefData != null && userPrefData != "" && userPrefData != "null") {
-          try{
+          try {
             Map<String, dynamic> mapData = json.decode(json.decode(userPrefData));
-            Navigator.pushNamed(context, "/homeScreen",arguments: mapData);
-          }catch(e){
-            Navigator.pushNamed(context, "/preferenceScreen");
+            // Navigator.pushNamed(context, "/homeScreen",arguments: mapData);
+            Navigator.pushNamedAndRemoveUntil(context, "/preferenceScreen", (Route<dynamic> route) => false);
+          } catch (e) {
+            Navigator.pushNamedAndRemoveUntil(context, "/preferenceScreen", (Route<dynamic> route) => false);
           }
-        }else{
-          Navigator.pushNamed(context, "/preferenceScreen");
+        } else {
+          Navigator.pushNamedAndRemoveUntil(context, "/preferenceScreen", (Route<dynamic> route) => false);
         }
-
       } else {
-        Navigator.pushReplacementNamed(context, "/introScreen");
+        Navigator.pushNamedAndRemoveUntil(context, "/introScreen", (Route<dynamic> route) => false);
       }
-    }
-    else{
-      Navigator.pushReplacementNamed(context, "/introScreen");
+    } else {
+      Navigator.pushNamedAndRemoveUntil(context, "/introScreen", (Route<dynamic> route) => false);
     }
 
     debugPrint(">>>>>loginData$isLogIn $logInSta");

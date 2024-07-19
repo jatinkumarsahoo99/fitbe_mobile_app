@@ -76,7 +76,7 @@ class _ForgotPasswordOtpState extends State<ForgotPasswordOtp> {
                     Row(
                       children: [
                         Text(
-                          "Email Verification Code",
+                          "${(argumentData['isMobile'] == true) ?"Mobile":"Email"} Verification Code",
                           style: TextStyles(context).googleRubikFontsForSecondaryText(fontSize: 12, fontWeight: FontWeight.w500),
                         )
                       ],

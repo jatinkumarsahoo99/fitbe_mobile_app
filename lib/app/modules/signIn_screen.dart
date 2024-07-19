@@ -176,7 +176,6 @@ class _SigninScreenState extends State<SigninScreen> with Helper {
     }
   }
 
-
   callSignInApi() {
     try {
       Utils.showProgressIndicator();
@@ -186,7 +185,7 @@ class _SigninScreenState extends State<SigninScreen> with Helper {
       HttpMethodsDio().postMethod(
           api: ApiEndPoint.signInUrl,
           json: postData,
-          fun: (map, code)  {
+          fun: (map, code) {
             Utils.disMissProgressIndicator();
 
             if (map is Map) {
@@ -194,21 +193,21 @@ class _SigninScreenState extends State<SigninScreen> with Helper {
                 postData['userId'] = map['data']["UserID"];
                 postData['EmailAddress'] = map['data']["EmailAddress"];
                 postData['MobileNumber'] = map['data']["MobileNumber"];
-                setLogInData(postData: postData, logInStatus: map["data"]['Status']);
-                // EasyLoading.showSuccess("Done");
-                Navigator.pushNamed(context, "/preferenceScreen");
+                setLogInData(postData: postData, logInStatus: map["data"]['Status'],userId: map['data']["UserID"]);
+                // EasyLoading.showSuccess("Loged In");
+                Navigator.pushNamedAndRemoveUntil(context, "/preferenceScreen", (Route<dynamic> route) => false,);
               } else if (map.containsKey("data") && map['data'] is Map && map["data"]['Status'] == "VERIFICATION_PENDING") {
                 postData['userId'] = map['data']["UserID"];
                 postData['EmailAddress'] = map['data']["EmailAddress"];
                 postData['MobileNumber'] = map['data']["MobileNumber"];
-                setLogInData(postData: postData, logInStatus: map["data"]['Status']);
+                setLogInData(postData: postData, logInStatus: map["data"]['Status'],userId: map['data']["UserID"]);
                 openDialog(postData);
               } else if (map.containsKey("data") && map['data'] is Map && map["data"]['Status'] == "COMPLETED") {
                 postData['userId'] = map['data']["UserID"];
                 postData['EmailAddress'] = map['data']["EmailAddress"];
                 postData['MobileNumber'] = map['data']["MobileNumber"];
-                setLogInData(postData: postData, logInStatus: map["data"]['Status']);
-                Navigator.pushNamed(context, "/homeScreen");
+                setLogInData(postData: postData, logInStatus: map["data"]['Status'],userId: map['data']["UserID"]);
+                Navigator.pushNamedAndRemoveUntil(context, "/homeScreen", (Route<dynamic> route) => false,);
               } else if (map.containsKey("message")) {
                 ShowSnackBar.showError(context, map["message"] ?? "Something went wrong");
               } else {
@@ -224,25 +223,24 @@ class _SigninScreenState extends State<SigninScreen> with Helper {
     }
   }
 
-  setLogInData({required Map<String,dynamic> postData,required String logInStatus}) async {
+  setLogInData({required Map<String, dynamic> postData, required String logInStatus,required String userId}) async {
     SharedPref sharedPref = SharedPref();
     await sharedPref.save("isLogIn", "true");
+    await sharedPref.save("userID", userId);
     await sharedPref.save("logInData", jsonEncode(postData));
     await sharedPref.save("logInSta", logInStatus);
   }
 
-  openDialog(Map<String,dynamic> postData) async {
-    bool isOk = await showCommonPopupNew(
-        "Verification", "Verification Pending\nPlease complete your verification", context,
+  openDialog(Map<String, dynamic> postData) async {
+    bool isOk = await showCommonPopupNew("Verification", "Verification Pending\nPlease complete your verification", context,
         barrierDismissible: false, isYesOrNoPopup: false);
     if (isOk) {
-      Navigator.pushNamed(
+      Navigator.pushNamedAndRemoveUntil(
         context,
         "/verificationScreen",
+            (Route<dynamic> route) => false,
         arguments: postData,
       );
     }
   }
-
-
 }

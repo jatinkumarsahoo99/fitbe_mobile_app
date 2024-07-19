@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../app_api_services/api_end_point.dart';
 import '../../app_api_services/http_methods.dart';
@@ -151,6 +152,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           fun: (map, code) {
             Utils.disMissProgressIndicator();
             if (code == 200) {
+              EasyLoading.showSuccess("Password Changed Successfully");
               Navigator.pushNamed(context, "/signInScreen");
             } else {
               ShowSnackBar.showError(context, "$map");

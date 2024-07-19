@@ -246,7 +246,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if(map is Map && map.containsKey("data") && map['data'] is Map && map['data'].containsKey("userId")) {
           // await sharedPref.save("userId",map['data']["userId"] );
           postData['userId'] = map['data']["userId"];
-          Navigator.pushNamed(context, "/verificationScreen",arguments: postData,);
+          Navigator.pushNamedAndRemoveUntil(context, "/verificationScreen",arguments: postData, (Route<dynamic> route) => false,);
         }else if(map is Map && map.containsKey("message")){
           ShowSnackBar.showError(context, map["message"]??"Something went wrong");
         }else{

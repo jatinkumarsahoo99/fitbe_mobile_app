@@ -47,6 +47,8 @@ dependencies:
   shared_preferences:
   flutter_advanced_drawer:
   cached_network_image:
+  intl:
+  skeletonizer:
 #  numberpicker:
 #  animated_weight_picker:
 
@@ -61,6 +63,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   flutter_launcher_icons:
+
 
 #  flutter_provider:
 

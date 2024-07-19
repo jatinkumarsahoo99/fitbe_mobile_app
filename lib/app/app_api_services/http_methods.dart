@@ -39,7 +39,7 @@ class HttpMethodsDio {
       service.Response response = await _dio.get(api);
       if (response.statusCode == 200 || response.statusCode == 201) {
         try {
-          fun(response.data);
+          fun(response.data,response.statusCode);
         } catch (e) {
           if (kDebugMode) {
             print("Message is: $e");
@@ -49,12 +49,12 @@ class HttpMethodsDio {
         if (kDebugMode) {
           print("jks>>${response.data}");
         }
-        fun(response.data);
+        fun(response.data,response.statusCode);
       } else {
         if (kDebugMode) {
           print("jks>>${response.data}");
         }
-        fun(failedMap);
+        fun(failedMap,response.statusCode);
       }
     } on DioException catch (e) {
       //log("Connector Response Error>>" + jsonEncode(e.message));
@@ -64,17 +64,17 @@ class HttpMethodsDio {
         case DioExceptionType.sendTimeout:
         case DioExceptionType.receiveTimeout:
         case DioExceptionType.badResponse:
-          fun(e.response?.data ?? "");
+          fun(e.response?.data ?? "",e.response?.statusCode);
           break;
         case DioExceptionType.badCertificate:
         case DioExceptionType.unknown:
-          fun(failedMap);
+          fun(failedMap,e.response?.statusCode);
           break;
         case DioExceptionType.connectionError:
-          fun(failedMap);
+          fun(failedMap,e.response?.statusCode);
           break;
         default:
-          fun(failedMap);
+          fun(failedMap,e.response?.statusCode);
           break;
       }
     }

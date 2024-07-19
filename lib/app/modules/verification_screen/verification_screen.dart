@@ -24,8 +24,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
   String emailOtp = "";
   String mobileOtp = "";
   SharedPref sharedPref = SharedPref();
-  String userId ="";
-  Map<String,dynamic> argumentData = {};
+  String userId = "";
+  Map<String, dynamic> argumentData = {};
   @override
   void initState() {
     super.initState();
@@ -33,7 +33,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    argumentData = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
+    argumentData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     Size size = MediaQuery.of(context).size;
 
     double usableHeight = size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
@@ -282,51 +282,47 @@ class _VerificationScreenState extends State<VerificationScreen> {
       Utils.showProgressIndicator();
       // userId = await sharedPref.getKey("userId")??"";
 
-      Map<String, dynamic> postData = {
-        "userId": userId??"",
-        "EmailAddressOTP": emailOtp,
-        "MobileNumberOTP": mobileOtp
-      };
+      Map<String, dynamic> postData = {"userId": userId ?? "", "EmailAddressOTP": emailOtp, "MobileNumberOTP": mobileOtp};
       debugPrint(">>>>>>postData$postData");
-      HttpMethodsDio().postMethod(api:ApiEndPoint.verifySignInOTP, fun: (map,code) {
-        Utils.disMissProgressIndicator();
-        if(code == 200){
-          Navigator.pushNamed(context, "/signInScreen");
-        }else if(map is Map && map.containsKey("message")){
-          ShowSnackBar.showError(context, map["message"]??"Something went wrong");
-        }else{
-          ShowSnackBar.showError(context, "$map");
-        }
-
-      }, json: postData);
+      HttpMethodsDio().postMethod(
+          api: ApiEndPoint.verifySignInOTP,
+          fun: (map, code) {
+            Utils.disMissProgressIndicator();
+            if (code == 200) {
+              Navigator.pushNamedAndRemoveUntil(context, "/signInScreen",  (Route<dynamic> route) => false,);
+            } else if (map is Map && map.containsKey("message")) {
+              ShowSnackBar.showError(context, map["message"] ?? "Something went wrong");
+            } else {
+              ShowSnackBar.showError(context, "$map");
+            }
+          },
+          json: postData);
     } catch (e) {
       Utils.disMissProgressIndicator();
       debugPrint(">>>>>>>>>>exception$e");
     }
   }
 
-  sendOtp({bool isMobile = false}){
+  sendOtp({bool isMobile = false}) {
     try {
       Utils.showProgressIndicator();
-      Map<String, dynamic> postData = (isMobile == false)?{
-        "EmailAddress": argumentData['EmailAddress']
-      }:{
-        "MobileNumber": argumentData['MobileNumber']
-      };
+      Map<String, dynamic> postData =
+          (isMobile == false) ? {"EmailAddress": argumentData['EmailAddress']} : {"MobileNumber": argumentData['MobileNumber']};
       debugPrint(">>>>>>postData$postData");
       Utils.disMissProgressIndicator();
-      HttpMethodsDio().postMethod(api:ApiEndPoint.forgotPasswordSendVerification, fun: (map,code) {
-        // Navigator.pushNamed(context, "/forgotPasswordOtp");
-        if(code == 200){
-
-        }else{
-          ShowSnackBar.showError(context, "$map");
-        }
-      }, json: postData);
+      HttpMethodsDio().postMethod(
+          api: ApiEndPoint.forgotPasswordSendVerification,
+          fun: (map, code) {
+            // Navigator.pushNamed(context, "/forgotPasswordOtp");
+            if (code == 200) {
+            } else {
+              ShowSnackBar.showError(context, "$map");
+            }
+          },
+          json: postData);
     } catch (e) {
       Utils.disMissProgressIndicator();
       debugPrint(">>>>>>>>>>exception$e");
     }
   }
-
 }
