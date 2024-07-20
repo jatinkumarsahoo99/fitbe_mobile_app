@@ -1,6 +1,5 @@
 import 'package:fitbe/app/app_theme/app_themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'app/app_routes/app_routes.dart';
@@ -10,15 +9,6 @@ import 'flavors/dev/dev_main.dart' as dev;
 import 'flavors/prod/prod_main.dart' as prod;
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-    statusBarBrightness: Brightness.dark,
-    // systemNavigationBarColor: themeData.scaffoldBackgroundColor,
-    systemNavigationBarDividerColor: Colors.transparent,
-    systemNavigationBarIconBrightness: Brightness.dark,
-  ));
-
   // runApp(const MyApp());
 
   const flavor = String.fromEnvironment('FLAVOR');

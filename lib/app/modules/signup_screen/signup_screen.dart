@@ -226,7 +226,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       } else {
         return false;
       }
-      debugPrint(">>>>>>>>>>>>>exception$e");
     }
   }
   callSignUpApi() {

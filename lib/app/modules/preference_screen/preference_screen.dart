@@ -236,18 +236,6 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                           ),
                         ],
                       ),
-
-                      /*Column(
-                        children: [
-                          Expanded(
-                            child: AnimatedNumberPicker(onChange: (int selectedItem) {
-                              debugPrint(">>>>>>>>>>>>>onChangeData$selectedItem");
-                              selectAge = selectedItem;
-                              selectAgeTap = true;
-                            },key: UniqueKey(),maxNum: 200,minNum: 0,suffix: "",selectedItemScrollPosition:selectAge ,),
-                          ),
-                        ],
-                      ),*/
                       Column(
                         children: [
                           Expanded(

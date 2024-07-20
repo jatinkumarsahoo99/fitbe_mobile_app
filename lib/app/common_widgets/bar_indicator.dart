@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class BarIndicator extends StatelessWidget {
 
-  List<double> lstData = [];
-  List<Color> lstColor = [];
+  final List<double> lstData;
+  final List<Color> lstColor;
 
-  double? barWidth;
-  double? fontSize;
+  final double? barWidth;
+  final double? fontSize;
 
-  BarIndicator({super.key,this.barWidth,required this.lstData,required this.lstColor,this.fontSize});
+  const BarIndicator({super.key,this.barWidth,required this.lstData,required this.lstColor,this.fontSize});
 
 
 

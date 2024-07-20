@@ -171,7 +171,6 @@ class _SigninScreenState extends State<SigninScreen> with Helper {
       } else {
         return false;
       }
-      debugPrint(">>>>>>>>>>>>>exception$e");
     }
   }
 

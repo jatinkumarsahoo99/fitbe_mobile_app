@@ -156,16 +156,16 @@ class HttpMethodsDio {
         }
         fun(failedMap,response.statusCode);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       switch (e.type) {
-        case DioErrorType.connectionTimeout:
-        case DioErrorType.cancel:
-        case DioErrorType.sendTimeout:
-        case DioErrorType.receiveTimeout:
-        case DioErrorType.unknown:
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.cancel:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.receiveTimeout:
+        case DioExceptionType.unknown:
           fun(failedMap,1000);
           break;
-        case DioErrorType.badResponse:
+        case DioExceptionType.badResponse:
           fun(e.response?.data??{},e.response?.statusCode);
         case DioExceptionType.badCertificate:
           fun(failedMap,e.response?.statusCode);
@@ -195,16 +195,16 @@ class HttpMethodsDio {
       } else {
         fun(failedMap,response.statusCode);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       switch (e.type) {
-        case DioErrorType.connectionTimeout:
-        case DioErrorType.cancel:
-        case DioErrorType.sendTimeout:
-        case DioErrorType.receiveTimeout:
-        case DioErrorType.unknown:
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.cancel:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.receiveTimeout:
+        case DioExceptionType.unknown:
           fun(failedMap,e.response?.statusCode);
           break;
-        case DioErrorType.badResponse:
+        case DioExceptionType.badResponse:
           fun(e.response?.data,e.response?.statusCode);
         case DioExceptionType.badCertificate:
           fun(failedMap,e.response?.statusCode);

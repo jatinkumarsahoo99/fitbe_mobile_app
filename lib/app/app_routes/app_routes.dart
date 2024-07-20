@@ -7,7 +7,7 @@ import '../modules/home_screen/home_screen.dart';
 import '../modules/intro_screen/intro_screen.dart';
 import '../modules/preference_screen/preference_screen.dart';
 import '../modules/recommendation_screen/recommendation_screen.dart';
-import '../modules/signIn_screen.dart';
+import '../modules/sign_in_screen.dart';
 import '../modules/signup_screen/signup_screen.dart';
 import '../modules/splash_screen/splash_screen.dart';
 import '../modules/verification_screen/verification_screen.dart';

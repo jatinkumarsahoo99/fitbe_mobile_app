@@ -124,7 +124,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         currentCode: emailOtp,
                         onCodeSubmitted: (code) {
                           debugPrint("onCodeSubmitted $code");
-                          emailOtp = code ?? "";
+                          emailOtp = code;
                           /*if (code.toString().length == 4) {
                             debugPrint("onCodeSubmitted $code");
                             emailOtp = code ?? "";
@@ -191,7 +191,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         currentCode: mobileOtp,
                         onCodeSubmitted: (code) {
                           debugPrint("onCodeSubmitted $code");
-                          mobileOtp = code ?? "";
+                          mobileOtp = code;
                           /*if (code.toString().length == 4) {
                             debugPrint("onCodeSubmitted $code");
                             mobileOtp = code ?? "";
@@ -282,7 +282,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       Utils.showProgressIndicator();
       // userId = await sharedPref.getKey("userId")??"";
 
-      Map<String, dynamic> postData = {"userId": userId ?? "", "EmailAddressOTP": emailOtp, "MobileNumberOTP": mobileOtp};
+      Map<String, dynamic> postData = {"userId": userId, "EmailAddressOTP": emailOtp, "MobileNumberOTP": mobileOtp};
       debugPrint(">>>>>>postData$postData");
       HttpMethodsDio().postMethod(
           api: ApiEndPoint.verifySignInOTP,

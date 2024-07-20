@@ -4,19 +4,16 @@ import 'package:flutter/material.dart';
 import '../app_theme/text_styles.dart';
 
 
-// import 'package:google_fonts/google_fonts.dart';
+class CustomTittleText extends StatelessWidget {
+  final String text;
+  final double? textSize;
+  final FontWeight? fontWeight;
+  final Color? color;
 
-
-class CustomeTittleText extends StatelessWidget {
-  String text;
-  double? textsize;
-  FontWeight? fontWeight;
-  Color? color;
-
-  CustomeTittleText(
+  const CustomTittleText(
       {super.key,
         required this.text,
-        this.textsize,
+        this.textSize,
         this.fontWeight,
         this.color});
 
@@ -31,21 +28,21 @@ class CustomeTittleText extends StatelessWidget {
   }
 }
 
-class CustomeSubTittleText extends StatelessWidget {
-  String text;
-  double? textsize;
-  FontWeight? fontWeight;
-  Color? color;
-  TextAlign? alignment;
-  int? maxlines;
+class CustomSubTittleText extends StatelessWidget {
+  final String text;
+  final double? textSize;
+  final FontWeight? fontWeight;
+  final Color? color;
+  final TextAlign? alignment;
+  final int? maxLines;
 
-  CustomeSubTittleText(
+  const CustomSubTittleText(
       {super.key,
         required this.text,
-        this.textsize,
+        this.textSize,
         this.fontWeight,
         this.alignment,
-        this.maxlines,
+        this.maxLines,
         this.color});
 
   @override
@@ -54,7 +51,7 @@ class CustomeSubTittleText extends StatelessWidget {
       text,
       style: TextStyles(context)
           .getBoldStyle().copyWith(fontSize: 10,color: color) ,
-      maxLines: maxlines ?? 1,
+      maxLines: maxLines ?? 1,
       overflow: TextOverflow.ellipsis,
       textAlign: alignment,
     );

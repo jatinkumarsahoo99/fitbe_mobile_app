@@ -49,21 +49,12 @@ class _SplashScreenState extends State<SplashScreen> with Helper {
           (Route<dynamic> route) => false,
         );
       } else if (logInSta.toString().contains("VERIFICATION_COMPLETED")) {
-        if (userPrefData != null && userPrefData != "" && userPrefData != "null") {
-          try {
-            Map<String, dynamic> mapData = json.decode(json.decode(userPrefData));
-            // Navigator.pushNamed(context, "/homeScreen",arguments: mapData);
-            Navigator.pushNamedAndRemoveUntil(context, "/preferenceScreen", (Route<dynamic> route) => false);
-          } catch (e) {
-            Navigator.pushNamedAndRemoveUntil(context, "/preferenceScreen", (Route<dynamic> route) => false);
-          }
-        } else {
-          Navigator.pushNamedAndRemoveUntil(context, "/preferenceScreen", (Route<dynamic> route) => false);
-        }
+        Navigator.pushNamedAndRemoveUntil(context, "/preferenceScreen", (Route<dynamic> route) => false);
       } else {
         Navigator.pushNamedAndRemoveUntil(context, "/introScreen", (Route<dynamic> route) => false);
       }
-    } else {
+    }
+    else {
       Navigator.pushNamedAndRemoveUntil(context, "/introScreen", (Route<dynamic> route) => false);
     }
 

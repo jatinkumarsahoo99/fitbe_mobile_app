@@ -60,7 +60,7 @@ class Utils {
 
       // Adjust for negative values
       if (days < 0) {
-        final previousMonth = DateTime(today.year, today.month - 1, birthDate.day);
+        // final previousMonth = DateTime(today.year, today.month - 1, birthDate.day);
         days += DateTime(today.year, today.month, 0).day; // Days in the previous month
         months--;
       }
