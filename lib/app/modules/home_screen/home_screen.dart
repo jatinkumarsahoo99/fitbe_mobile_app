@@ -1,25 +1,18 @@
-import 'dart:convert';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fitbe/app/app_utils/helper.dart';
 import 'package:fitbe/app/modules/home_screen/provider/profile_provider.dart';
 import 'package:fitbe/app/modules/home_screen/widget/home_screen_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../app_api_services/api_end_point.dart';
-import '../../app_api_services/http_methods.dart';
 import '../../app_theme/text_styles.dart';
 import '../../app_utils/shared_preferance.dart';
 import '../../app_utils/utils.dart';
-import '../../common_widgets/CustomeTittleText.dart';
 import '../../common_widgets/card_widget_with_per.dart';
 import '../../common_widgets/goal_data_card.dart';
 import '../../common_widgets/grid_view_widget.dart';
-import 'model/userDetails.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

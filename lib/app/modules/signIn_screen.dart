@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:fitbe/app/app_utils/helper.dart';
 import 'package:fitbe/app/app_utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../app_api_services/api_end_point.dart';
 import '../app_api_services/http_methods.dart';

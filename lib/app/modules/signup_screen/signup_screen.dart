@@ -1,13 +1,11 @@
 import 'package:fitbe/app/app_utils/utils.dart';
 import 'package:fitbe/app/modules/signup_screen/provider/sign_up_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import '../../app_api_services/api_end_point.dart';
 import '../../app_api_services/http_methods.dart';
 import '../../app_theme/text_styles.dart';
-import '../../app_utils/shared_preferance.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_password_text_field.dart';
 import '../../common_widgets/common_text_field_view.dart';
