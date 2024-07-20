@@ -22,7 +22,7 @@ class AppRoutes{
     "/signInScreen":(context) => const SigninScreen(),
     "/forgotPassword":(context) => const ForgotPassword(),
     "/forgotPasswordOtp":(context) => const ForgotPasswordOtp(),
-    "/preferenceScreen":(context) => const PreferenceScreen(),
+    "/preferenceScreen":PreferenceScreen.builder,
     "/recommendationScreen":(context) => const RecommendationScreen(),
     "/homeScreen":(context) => const HomeScreen(),
     "/changePassword":(context) => const ChangePassword(),

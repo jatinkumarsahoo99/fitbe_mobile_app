@@ -2,18 +2,25 @@
 import 'dart:convert';
 
 import 'package:fitbe/app/common_widgets/show_snack_bar.dart';
+import 'package:fitbe/app/modules/preference_screen/provider/gender_provider.dart';
+import 'package:fitbe/app/modules/preference_screen/provider/dob_provider.dart';
+import 'package:fitbe/app/modules/preference_screen/provider/page_progress_provider.dart';
+import 'package:fitbe/app/modules/preference_screen/provider/preference_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 import '../../app_api_services/api_end_point.dart';
 import '../../app_api_services/http_methods.dart';
 import '../../app_theme/colors.dart';
 import '../../app_theme/text_styles.dart';
+
 // import '../../common_widgets/circular_scroll_physics/cicular_scroll_physics.dart';
 import '../../app_utils/shared_preferance.dart';
 import '../../app_utils/utils.dart';
+import '../../common_widgets/age_show_widget.dart';
 import '../../common_widgets/animated_number_picker.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_text_field_view.dart';
@@ -25,14 +32,32 @@ import 'gender_screen.dart';
 class PreferenceScreen extends StatefulWidget {
   const PreferenceScreen({super.key});
 
+  static Widget builder(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => GenderProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DobProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PreferenceProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PageProgressProvider(),
+        ),
+      ],
+      child: const PreferenceScreen(),
+    );
+  }
+
   @override
   State<PreferenceScreen> createState() => _PreferenceScreenState();
 }
 
 class _PreferenceScreenState extends State<PreferenceScreen> {
   var pageController = PageController(initialPage: 0);
-  int currentShowIndex = 0;
-  int selectAge = 10;
   String selectWeight = "";
   int selectHeight = 10;
   int selectHipSize = 10;
@@ -42,12 +67,6 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
   bool selectAgeTap = false;
   bool selectWeightTap = false;
   bool selectHeightTap = false;
-
-  TextEditingController dateOfBirth = TextEditingController();
-
-  int year = 0;
-  int month = 0;
-  int days = 0;
 
   @override
   void initState() {
@@ -69,8 +88,6 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
       key: UniqueKey(),
     );
   }
-
-  String? selectGender;
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -97,62 +114,66 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
               /* LinearProgressIndicator(
                 value:double.parse(currentShowIndex.toString()),
               ),*/
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 0.1),
-                          borderRadius: BorderRadius.circular(20),
-                          // color: const Color(0xFFD9D9D9)
+              Consumer<PageProgressProvider>(
+                builder: (context, provider, child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 0.1),
+                              borderRadius: BorderRadius.circular(20),
+                              // color: const Color(0xFFD9D9D9)
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.arrow_back_sharp,
+                                size: 20,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        width: size.width * 0.7,
+                        child: LinearPercentIndicator(
+                          progressColor: ColorsGroup.primaryColor,
+                          backgroundColor: Colors.grey,
+                          percent: ((context.read<PageProgressProvider>().currentShowIndex + 1) / 6),
+                          animation: true,
+                          lineHeight: 10,
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          barRadius: const Radius.circular(5),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.arrow_back_sharp,
-                            size: 20,
-                          ),
-                        )),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.7,
-                    child: LinearPercentIndicator(
-                      progressColor: ColorsGroup.primaryColor,
-                      backgroundColor: Colors.grey,
-                      percent: ((currentShowIndex + 1) / 6),
-                      animation: true,
-                      lineHeight: 10,
-                      linearStrokeCap: LinearStrokeCap.roundAll,
-                      barRadius: const Radius.circular(5),
-                    ),
-                  ),
-                  Text(
-                    "${(currentShowIndex + 1)}/6",
-                    style: TextStyles(context).googleRubikFontsForText3(fontSize: 12, fontWeight: FontWeight.w500),
-                  )
-                ],
+                      ),
+                      Text(
+                        "${(context.read<PageProgressProvider>().currentShowIndex + 1)}/6",
+                        style: TextStyles(context).googleRubikFontsForText3(fontSize: 12, fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  );
+                },
               ),
-              getHeaderWidget(index: (currentShowIndex + 1)),
+              getHeaderWidget(index: (context.read<PageProgressProvider>().currentShowIndex + 1)),
               Expanded(
                   flex: 9,
                   child: PageView(
                     controller: pageController,
                     physics: const NeverScrollableScrollPhysics(),
                     onPageChanged: (i) {
-                      currentShowIndex = i;
-                      setState(() {});
+                      context.read<PageProgressProvider>().setPageProgress(i);
+                      /* currentShowIndex = i;
+                      setState(() {});*/
                     },
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
                       GenderScreen(
                         onTap: (index) {
                           debugPrint(">>>>>>>>>>>>>Index$index");
-                          selectGender = (index == 1) ? "Male" : "Female";
-                          setState(() {});
+                          // selectGender = (index == 1) ? "Male" : "Female";
                         },
                       ),
                       Column(
@@ -185,11 +206,9 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                                 lastDate: DateTime.now(),
                                 onDateChanged: (DateTime value) {
                                   var (yearData, monthData, daysData) = Utils.calculateAgeWithYearMonthAndDay(value);
-                                  year = yearData;
-                                  month = monthData;
-                                  days = daysData;
-                                  dateOfBirth.text = DateFormat("dd-MM-yyyy").format(value);
-                                  setState(() {});
+                                  context
+                                      .read<DobProvider>()
+                                      .setDOBData(yearData, monthData, daysData, DateFormat("dd-MM-yyyy").format(value));
                                   // debugPrint(">>>>>>>>>>>>${DateFormat("yyyy-MM-dd").format(value)}");
                                 },
                               ),
@@ -198,9 +217,16 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                           const SizedBox(
                             height: 25,
                           ),
-                          ageShowWidget(year, month, days),
+                          Consumer<DobProvider>(
+                            builder: (context, provider, child) {
+                              return AgeShowWidget(
+                                  year: context.read<DobProvider>().year,
+                                  month: context.read<DobProvider>().month,
+                                  days: context.read<DobProvider>().days);
+                            },
+                          ),
                           CommonTextFieldView(
-                            controller: dateOfBirth,
+                            controller: context.read<DobProvider>().dateOfBirth,
                             // errorText: _errorFName,
                             padding: const EdgeInsets.only(left: 0, right: 0),
                             titleText: "Your DOB",
@@ -264,10 +290,13 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Expanded(
-                                    child: Image.asset(
-                                  "assets/images/${(selectGender == "Female") ? "female_hip" : "man_hip"}.png",
-                                  height: 300,
+                                Expanded(child: Consumer<GenderProvider>(
+                                  builder: (context, provider, child) {
+                                    return Image.asset(
+                                      "assets/images/${(context.read<GenderProvider>().selectedGender == "Female") ? "female_hip" : "man_hip"}.png",
+                                      height: 300,
+                                    );
+                                  },
                                 )),
                                 Expanded(
                                   child: AnimatedNumberPicker(
@@ -294,10 +323,13 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Expanded(
-                                    child: Image.asset(
-                                  "assets/images/${(selectGender == "Female") ? "female_waist" : "man_waist"}.png",
-                                  height: 300,
+                                Expanded(child: Consumer<GenderProvider>(
+                                  builder: (context, provider, child) {
+                                    return Image.asset(
+                                      "assets/images/${(context.read<GenderProvider>().selectedGender == "Female") ? "female_waist" : "man_waist"}.png",
+                                      height: 300,
+                                    );
+                                  },
                                 )),
                                 Expanded(
                                   child: AnimatedNumberPicker(
@@ -327,37 +359,39 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                 radius: 30,
                 height: 48,
                 onTap: () async {
-                  if (selectGender == null && currentShowIndex == 0) {
+                  if (context.read<GenderProvider>().selectedGender == "" &&
+                      context.read<PageProgressProvider>().currentShowIndex == 0) {
                     ShowSnackBar.showError(context, "Please select your gender");
-                  } else if (dateOfBirth.text == "" && currentShowIndex == 1) {
+                  } else if (context.read<DobProvider>().dateOfBirth.text == "" &&
+                      context.read<PageProgressProvider>().currentShowIndex == 1) {
                     ShowSnackBar.showError(context, "Please select your age");
-                  } else if (!selectHeightTap && currentShowIndex == 2) {
+                  } else if (!selectHeightTap && context.read<PageProgressProvider>().currentShowIndex == 2) {
                     ShowSnackBar.showError(context, "Please select your height");
-                  } else if (!selectWeightTap && currentShowIndex == 3) {
+                  } else if (!selectWeightTap && context.read<PageProgressProvider>().currentShowIndex == 3) {
                     ShowSnackBar.showError(context, "Please select your weight");
-                  } else if (!selectHipSizeTap && currentShowIndex == 4) {
+                  } else if (!selectHipSizeTap && context.read<PageProgressProvider>().currentShowIndex == 4) {
                     ShowSnackBar.showError(context, "Please select your hip");
-                  } else if (!selectWaistSizeTap && currentShowIndex == 5) {
+                  } else if (!selectWaistSizeTap && context.read<PageProgressProvider>().currentShowIndex == 5) {
                     ShowSnackBar.showError(context, "Please select your waist");
                   } else {
-                    if ((currentShowIndex + 1) < 6) {
+                    if ((context.read<PageProgressProvider>().currentShowIndex + 1) < 6) {
                       pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
                     } else {
                       SharedPref sharedPref = SharedPref();
-                      var userId = await sharedPref.getKey("userID");
                       Map<String, dynamic> userDetails = {
-                        "Gender": selectGender,
-                        // "age": selectAge,
+                        "Gender": context.read<GenderProvider>().selectedGender,
                         "Height": selectHeight.toString(),
                         "Weight": selectWeight.toString(),
                         "HipSize": selectHipSize.toString(),
                         "Waist": selectWaistSize.toString(),
-                        "DateOfBirth": dateOfBirth.text,
-                        "UserID": json.decode(userId),
+                        "DateOfBirth": context.read<DobProvider>().dateOfBirth.text,
                       };
+                      var userId = await sharedPref.getKey("userID");
+                      userDetails['UserID'] = json.decode(userId);
+                      debugPrint(">>>>>>>>>>>userDetails$userDetails");
 
                       await sharedPref.save("userData", json.encode(userDetails));
-                      callPreferenceApi(userDetails);
+                      // callPreferenceApi(userDetails);
 
                       /*Navigator.pushNamedAndRemoveUntil(
                         context,
@@ -406,16 +440,5 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
           }
         },
         json: postData);
-  }
-
-  Widget ageShowWidget(int year, int month, int days) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("$year year's "),
-        Text("$month month's "),
-        Text("$days day's"),
-      ],
-    );
   }
 }
