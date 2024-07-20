@@ -6,26 +6,40 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'app/app_routes/app_routes.dart';
 import 'app/modules/splash_screen/splash_screen.dart';
 
+import 'flavors/dev/dev_main.dart' as dev;
+import 'flavors/prod/prod_main.dart' as prod;
+
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
-    statusBarIconBrightness:  Brightness.dark,
-    statusBarBrightness:  Brightness.dark,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.dark,
     // systemNavigationBarColor: themeData.scaffoldBackgroundColor,
     systemNavigationBarDividerColor: Colors.transparent,
-    systemNavigationBarIconBrightness:  Brightness.dark,
+    systemNavigationBarIconBrightness: Brightness.dark,
   ));
 
-  runApp(const MyApp());
-  configLoading();
+  // runApp(const MyApp());
+
+  const flavor = String.fromEnvironment('FLAVOR');
+  switch (flavor) {
+    case 'prod':
+      prod.main();
+      break;
+    case 'dev':
+    default:
+      dev.main();
+      break;
+  }
 }
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-void configLoading(){
+void configLoading() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
     ..loadingStyle = EasyLoadingStyle.dark
-    ..loadingStyle =EasyLoadingStyle.custom
+    ..loadingStyle = EasyLoadingStyle.custom
     ..indicatorSize = 45.0
     ..radius = 10.0
     ..progressColor = Colors.white
@@ -45,8 +59,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Fitbe',
-      theme:AppTheme.getAppTheme(),
-      home:  const SplashScreen(),
+      theme: AppTheme.getAppTheme(),
+      home: const SplashScreen(),
       navigatorKey: navigatorKey,
       builder: EasyLoading.init(builder: (context, widget) {
         return MediaQuery(

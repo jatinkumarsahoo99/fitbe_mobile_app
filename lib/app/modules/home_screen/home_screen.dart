@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
   void gotoSplashScreen() async {
     bool isOk = await showCommonPopupNew(
       "Are you sure?",
-      "You want to Sign Out.",
+      "You want to Sign Out?.",
       context,
       barrierDismissible: true,
       isYesOrNoPopup: true,
