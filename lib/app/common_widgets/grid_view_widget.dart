@@ -46,7 +46,7 @@ class GridViewExample extends StatelessWidget {
         crossAxisCount: 2, // Number of columns
         crossAxisSpacing: 10.0, // Space between columns
         mainAxisSpacing: 10.0, // Space between rows
-        childAspectRatio: 1.0, // Ratio of width to height of each item
+        childAspectRatio: 1.2, // Ratio of width to height of each item
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
@@ -56,7 +56,7 @@ class GridViewExample extends StatelessWidget {
             borderRadius: BorderRadius.circular(20), // Rounded corners
             // border: Border.all(color: Colors.blueAccent, width: 2),
           ),
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(left: 12.0,right: 12,top: 6,bottom: 6),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

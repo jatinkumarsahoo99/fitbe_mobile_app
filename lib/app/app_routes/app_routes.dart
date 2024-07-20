@@ -24,7 +24,7 @@ class AppRoutes{
     "/forgotPasswordOtp":(context) => const ForgotPasswordOtp(),
     "/preferenceScreen":PreferenceScreen.builder,
     "/recommendationScreen":(context) => const RecommendationScreen(),
-    "/homeScreen":(context) => const HomeScreen(),
+    "/homeScreen": HomeScreen.builder,
     "/changePassword":(context) => const ChangePassword(),
   };
 

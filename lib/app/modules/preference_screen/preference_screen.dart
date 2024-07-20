@@ -391,7 +391,7 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                       debugPrint(">>>>>>>>>>>userDetails$userDetails");
 
                       await sharedPref.save("userData", json.encode(userDetails));
-                      // callPreferenceApi(userDetails);
+                      callPreferenceApi(userDetails);
 
                       /*Navigator.pushNamedAndRemoveUntil(
                         context,

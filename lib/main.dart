@@ -19,7 +19,7 @@ void main() {
   runApp(const MyApp());
   configLoading();
 }
-
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void configLoading(){
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
       title: 'Fitbe',
       theme:AppTheme.getAppTheme(),
       home:  const SplashScreen(),
+      navigatorKey: navigatorKey,
       builder: EasyLoading.init(builder: (context, widget) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
