@@ -17,7 +17,7 @@ class CustomDialog extends StatefulWidget {
   final double? width;
 
   const CustomDialog({
-    Key? key,
+    super.key,
     this.onCloseClick,
     required this.title,
     this.description = '',
@@ -26,7 +26,7 @@ class CustomDialog extends StatefulWidget {
     this.actionButtonList,
     this.isVerical = false,
     this.width,this.writeWidget
-  }) : super(key: key);
+  });
 
   @override
   State<CustomDialog> createState() => _CustomDialogState();

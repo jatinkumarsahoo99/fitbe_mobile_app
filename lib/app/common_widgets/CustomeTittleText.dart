@@ -14,12 +14,11 @@ class CustomeTittleText extends StatelessWidget {
   Color? color;
 
   CustomeTittleText(
-      {Key? key,
+      {super.key,
         required this.text,
         this.textsize,
         this.fontWeight,
-        this.color})
-      : super(key: key);
+        this.color});
 
   @override
   Widget build(BuildContext context) {

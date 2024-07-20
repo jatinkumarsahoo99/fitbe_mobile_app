@@ -14,7 +14,7 @@ class UserDetails {
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 }
@@ -64,18 +64,18 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CreatedAt'] = this.createdAt;
-    data['DateOfBirth'] = this.dateOfBirth;
-    data['EmailAddress'] = this.emailAddress;
-    data['EmailAddressOTP'] = this.emailAddressOTP;
-    data['FullName'] = this.fullName;
-    data['MobileNumber'] = this.mobileNumber;
-    data['MobileNumberOTP'] = this.mobileNumberOTP;
-    data['Password'] = this.password;
-    data['Status'] = this.status;
-    data['UpdatedAt'] = this.updatedAt;
-    data['UserID'] = this.userID;
-    data['_id'] = this.sId;
+    data['CreatedAt'] = createdAt;
+    data['DateOfBirth'] = dateOfBirth;
+    data['EmailAddress'] = emailAddress;
+    data['EmailAddressOTP'] = emailAddressOTP;
+    data['FullName'] = fullName;
+    data['MobileNumber'] = mobileNumber;
+    data['MobileNumberOTP'] = mobileNumberOTP;
+    data['Password'] = password;
+    data['Status'] = status;
+    data['UpdatedAt'] = updatedAt;
+    data['UserID'] = userID;
+    data['_id'] = sId;
     return data;
   }
 }
