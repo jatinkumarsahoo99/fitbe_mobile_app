@@ -6,7 +6,6 @@ import 'package:fitbe/app/modules/preference_screen/provider/gender_provider.dar
 import 'package:fitbe/app/modules/preference_screen/provider/dob_provider.dart';
 import 'package:fitbe/app/modules/preference_screen/provider/page_progress_provider.dart';
 import 'package:fitbe/app/modules/preference_screen/provider/preference_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';

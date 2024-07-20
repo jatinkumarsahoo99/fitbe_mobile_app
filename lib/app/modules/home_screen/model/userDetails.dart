@@ -5,7 +5,7 @@ class UserDetails {
   UserDetails({this.data, this.message});
 
   UserDetails.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -63,7 +63,7 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['CreatedAt'] = createdAt;
     data['DateOfBirth'] = dateOfBirth;
     data['EmailAddress'] = emailAddress;
