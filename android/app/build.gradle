@@ -87,8 +87,8 @@ android {
     // Setting custom APK file name
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            def formattedDate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())
-            def outputFileName = "app-fitbe-${variant.flavorName}-${variant.buildType.name}-${formattedDate}.apk"
+            def formattedDate = new SimpleDateFormat("MM").format(new Date())
+            def outputFileName = "fitbe-${variant.flavorName}-${variant.buildType.name}-${formattedDate}.apk"
             println "Setting output file name: $outputFileName"
             output.outputFileName = outputFileName
         }
