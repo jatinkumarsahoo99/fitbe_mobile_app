@@ -42,3 +42,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /lib/flavors/env.dart
+/lib/flavors/dev
+/lib/flavors/prod

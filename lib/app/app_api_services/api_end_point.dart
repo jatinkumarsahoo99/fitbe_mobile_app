@@ -3,7 +3,7 @@ import '../../flavors/flavor_config.dart';
 
 class ApiEndPoint{
 
-  //  flutter build apk --flavor dev -t lib/flavors/dev/dev_main.dart (build command)
+  //  flutter build apk --flavor dev -t lib/flavors/env.dart (build command)
 
   static bool isDev = true;
 
