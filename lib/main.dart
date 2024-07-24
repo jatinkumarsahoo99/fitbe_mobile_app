@@ -5,15 +5,15 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'app/app_routes/app_routes.dart';
 import 'app/modules/splash_screen/splash_screen.dart';
 
-// import 'flavors/dev/dev_main.dart' as dev;
-// import 'flavors/prod/prod_main.dart' as prod;
+import 'flavors/dev/dev_main.dart' as dev;
+import 'flavors/prod/prod_main.dart' as prod;
 
-import 'flavors/env.dart' as env;
+// import 'flavors/env.dart' as env;
 
 void main() {
   // runApp(const MyApp());
 
- /* const flavor = String.fromEnvironment('FLAVOR');
+  const flavor = String.fromEnvironment('FLAVOR');
   switch (flavor) {
     case 'prod':
       prod.main();
@@ -22,10 +22,8 @@ void main() {
     default:
       dev.main();
       break;
-  }*/
-  env.main();
-
-
+  }
+  // env.main();
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
