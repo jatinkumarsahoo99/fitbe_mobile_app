@@ -49,6 +49,8 @@ dependencies:
   cached_network_image:
   intl:
   skeletonizer:
+  strava_client: ^2.1.1
+  webview_flutter: ^4.8.0
 #  numberpicker:
 #  animated_weight_picker:
 

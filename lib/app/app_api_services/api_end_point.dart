@@ -23,4 +23,9 @@ class ApiEndPoint{
   static String changePassword  = "$baseUrl/forgotPassword/updatePassword";
   static String preferences  = "$baseUrl/preferences";
 
+
+  /// strava end point
+
+  static String stravaAuthUrl(String userId) => "https://www.strava.com/oauth/authorize?client_id=131394&response_type=code&redirect_uri=https://fitbe-dev.skill-mine.com/strava/test/code/$userId&approval_prompt=force&scope=read,activity:read";
+
 }

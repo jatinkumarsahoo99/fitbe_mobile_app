@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
 import '../../../app_theme/text_styles.dart';
+import '../../strava_auth_web_view/strava_auth_web_view.dart';
 
 class HomeScreenDrawer extends StatelessWidget {
   final String fullName;
   final String mobileNumber;
   final String emailAddress;
+  final String userId;
   final VoidCallback logOutTap;
   final AdvancedDrawerController? advancedDrawerController;
   const HomeScreenDrawer(
@@ -15,7 +17,7 @@ class HomeScreenDrawer extends StatelessWidget {
       required this.mobileNumber,
       required this.emailAddress,
       required this.logOutTap,
-      required this.advancedDrawerController});
+      required this.advancedDrawerController, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +88,19 @@ class HomeScreenDrawer extends StatelessWidget {
             leading: Icon(Icons.home, color: Theme.of(context).primaryColor),
             title: Text(
               'Home',
+              style: TextStyles(context).getRegularStyle().copyWith(fontSize: 15),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  StravaAuthWebView(userId:userId,)),
+              );
+            },
+            leading: Icon(Icons.settings, color: Theme.of(context).primaryColor),
+            title: Text(
+              'Setting',
               style: TextStyles(context).getRegularStyle().copyWith(fontSize: 15),
             ),
           ),

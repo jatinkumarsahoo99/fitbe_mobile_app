@@ -1,4 +1,3 @@
-
 import 'package:fitbe/app/app_utils/helper.dart';
 import 'package:fitbe/app/modules/home_screen/provider/profile_provider.dart';
 import 'package:fitbe/app/modules/home_screen/widget/home_screen_drawer.dart';
@@ -78,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
               emailAddress: context.read<ProfileProvider>().userDetails?.data?.emailAddress ?? '',
               logOutTap: gotoSplashScreen,
               advancedDrawerController: advancedDrawerController,
+              userId: context.read<ProfileProvider>().userDetails?.data?.userID ?? "",
             );
           },
         ),
