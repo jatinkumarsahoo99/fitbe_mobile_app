@@ -5,8 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'app/app_routes/app_routes.dart';
 import 'app/modules/splash_screen/splash_screen.dart';
 
-// import 'flavors/dev/dev_main.dart' as dev;
-// import 'flavors/prod/prod_main.dart' as prod;
+// import 'flavors/dev/dev.dart' as dev;
+// import 'flavors/prod/prod.dart' as prod;
 
 import 'flavors/env.dart' as env;
 

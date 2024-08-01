@@ -156,7 +156,11 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                   );
                 },
               ),
-              getHeaderWidget(index: (context.read<PageProgressProvider>().currentShowIndex + 1)),
+              Consumer<PageProgressProvider>(
+                builder: (context, provider, child) {
+                  return getHeaderWidget(index: (context.read<PageProgressProvider>().currentShowIndex + 1));
+                },
+              ),
               Expanded(
                   flex: 9,
                   child: PageView(
