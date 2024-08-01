@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class GridViewExample extends StatelessWidget {
   final List<Map<String, dynamic>> items = [
     {
-    "title": "Calories",
+    "title": "Calories Burnt",
     "value": "360",
     "unit": "Kcal",
     "icon": Icons.local_fire_department,
@@ -12,14 +12,14 @@ class GridViewExample extends StatelessWidget {
 
   },
     {
-      "title": "Step",
+      "title": "Calories Intake",
       "value": "300",
-      "unit": "Step",
-      "icon": Icons.do_not_step,
+      "unit": "Kcal",
+      "icon": Icons.food_bank_rounded,
       "color":const Color(0xffEFF0FF),
       "iconColor":Colors.blueAccent
     },
-    {
+   /* {
       "title": "Training",
       "value": "1.4",
       "unit": "Hours",
@@ -34,7 +34,7 @@ class GridViewExample extends StatelessWidget {
       "icon": Icons.bed,
       "color":const Color(0xffEEF7FF),
       "iconColor":Colors.blue
-    },
+    },*/
   ];
 
   GridViewExample({super.key});

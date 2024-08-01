@@ -1,6 +1,7 @@
 class IconValModel{
   String ? icon;
-  String ? textVal;
+  String ? textDesc;
+  String ? textHeader;
 
-  IconValModel({this.icon,this.textVal});
+  IconValModel({this.icon,this.textDesc,this.textHeader});
 }

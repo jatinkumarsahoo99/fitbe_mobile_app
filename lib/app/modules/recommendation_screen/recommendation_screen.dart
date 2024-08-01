@@ -28,13 +28,13 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
   List<String> headerTab = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7"];
 
   List<IconValModel> lstDataForFooter = [
-    IconValModel(icon: "break_fast", textVal: "Gap of 14 hours between Dinner and next day Breakfast (Only water allowed)"),
-    IconValModel(icon: "cardio", textVal: "No Carbonated, Aerated or Sugary Drinks"),
-    IconValModel(icon: "drink", textVal: "Avoid all kinds of sweets"),
-    IconValModel(icon: "meal", textVal: "Limited Coffee/Tea with Sugar"),
-    IconValModel(icon: "walk", textVal: "Walk for 1 hour before breakfast"),
-    IconValModel(icon: "walk", textVal: "Walk for 1 hour before breakfast"),
-    IconValModel(icon: "walk", textVal: "Walk for 1 hour before breakfast"),
+    IconValModel(icon: "break_fast", textDesc: "Gap of 14 hours between Dinner and next day Breakfast (Only water allowed)"),
+    IconValModel(icon: "cardio", textDesc: "No Carbonated, Aerated or Sugary Drinks"),
+    IconValModel(icon: "drink", textDesc: "Avoid all kinds of sweets"),
+    IconValModel(icon: "meal", textDesc: "Limited Coffee/Tea with Sugar"),
+    IconValModel(icon: "walk", textDesc: "Walk for 1 hour before breakfast"),
+    IconValModel(icon: "walk", textDesc: "Walk for 1 hour before breakfast"),
+    IconValModel(icon: "walk", textDesc: "Walk for 1 hour before breakfast"),
     // IconValModel(icon: "coffee",textVal: "Limit Cardio, HIIT, Weight training to 2 days a week"),
     // IconValModel(icon: "sweets",textVal: "If hungry outside meal times, try water first."),
   ];
@@ -166,7 +166,7 @@ class _RecommendationScreenState extends State<RecommendationScreen> {
                                   SizedBox(
                                       width: size.width * 0.76,
                                       child: Text(
-                                        lstDataForFooter[index].textVal ?? "",
+                                        lstDataForFooter[index].textDesc ?? "",
                                         maxLines: 2,
                                         style: TextStyles(context)
                                             .googleRubikFontsForSecondaryText(fontSize: 10, fontWeight: FontWeight.w400),

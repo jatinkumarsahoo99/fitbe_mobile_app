@@ -36,14 +36,14 @@ class CardWidgetWithPer extends StatelessWidget {
               radius: 50.0,
               lineWidth: 7.0,
               animation: true,
-              percent: 0.75,
+              percent: 0.50,
 
               center: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 // crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                    Text(
-                    "75",
+                    "50",
                     style:TextStyles(context).googleRubikFontsForButtonText(fontSize: 24,fontWeight: FontWeight.w700),
                   ),
                   Text(
