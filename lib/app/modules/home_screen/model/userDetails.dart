@@ -32,6 +32,8 @@ class Data {
   String? updatedAt;
   String? userID;
   String? sId;
+  String? stravaProfileUrl;
+  String? profileUrl;
 
   Data(
       {this.createdAt,
@@ -45,6 +47,8 @@ class Data {
         this.status,
         this.updatedAt,
         this.userID,
+        this.stravaProfileUrl,
+        this.profileUrl,
         this.sId});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -60,6 +64,8 @@ class Data {
     updatedAt = json['UpdatedAt'];
     userID = json['UserID'];
     sId = json['_id'];
+    stravaProfileUrl = json['StravaProfileUrl'];
+    profileUrl = json['profileUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +82,8 @@ class Data {
     data['UpdatedAt'] = updatedAt;
     data['UserID'] = userID;
     data['_id'] = sId;
+    data['profileUrl'] = profileUrl;
+    data['StravaProfileUrl'] = stravaProfileUrl;
     return data;
   }
 }

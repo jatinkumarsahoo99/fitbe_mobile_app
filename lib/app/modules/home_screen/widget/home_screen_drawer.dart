@@ -17,7 +17,8 @@ class HomeScreenDrawer extends StatelessWidget {
       required this.mobileNumber,
       required this.emailAddress,
       required this.logOutTap,
-      required this.advancedDrawerController, required this.userId});
+      required this.advancedDrawerController,
+      required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +42,12 @@ class HomeScreenDrawer extends StatelessWidget {
                       ClipOval(
                         child: SizedBox.fromSize(
                             size: const Size.fromRadius(40), // Image radius
-                            child: Image.asset(
-                              'assets/images/man.jpg',
+                            child: Image.network(
+                              'https://i.pngimg.me/thumb/f/720/c3f2c592f9.jpg',
                               fit: BoxFit.cover,
+                              errorBuilder: (BuildContext context, Object obj, StackTrace? stack) {
+                                return Image.asset("assets/images/man.jpg");
+                              },
                             )),
                       ),
                     ],
@@ -90,32 +94,58 @@ class HomeScreenDrawer extends StatelessWidget {
               'Home',
               style: TextStyles(context).getRegularStyle().copyWith(fontSize: 15),
             ),
-            trailing:  Icon(Icons.arrow_forward_ios,color: Theme.of(context).primaryColor,size: 15,),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).primaryColor,
+              size: 15,
+            ),
           ),
           ListTile(
-            onTap: () {
-
-            },
+            onTap: () {},
             leading: Icon(Icons.person, color: Theme.of(context).primaryColor),
             title: Text(
               'Profile',
               style: TextStyles(context).getRegularStyle().copyWith(fontSize: 15),
             ),
-            trailing:  Icon(Icons.arrow_forward_ios,color: Theme.of(context).primaryColor,size: 15,),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).primaryColor,
+              size: 15,
+            ),
           ),
           ListTile(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>  StravaAuthWebView(userId:userId,)),
-              );
-            },
+            onTap: () {},
             leading: Icon(Icons.settings, color: Theme.of(context).primaryColor),
             title: Text(
               'Setting',
               style: TextStyles(context).getRegularStyle().copyWith(fontSize: 15),
             ),
-            trailing:  Icon(Icons.arrow_forward_ios,color: Theme.of(context).primaryColor,size: 15,),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).primaryColor,
+              size: 15,
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => StravaAuthWebView(
+                          userId: userId,
+                        )),
+              );
+            },
+            leading: Icon(Icons.connect_without_contact, color: Theme.of(context).primaryColor),
+            title: Text(
+              'Connect to strava',
+              style: TextStyles(context).getRegularStyle().copyWith(fontSize: 15),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).primaryColor,
+              size: 15,
+            ),
           ),
           ListTile(
             onTap: logOutTap,
@@ -124,7 +154,11 @@ class HomeScreenDrawer extends StatelessWidget {
               'Logout',
               style: TextStyles(context).getRegularStyle().copyWith(fontSize: 15),
             ),
-            trailing:  Icon(Icons.arrow_forward_ios,color: Theme.of(context).primaryColor,size: 15,),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).primaryColor,
+              size: 15,
+            ),
           ),
         ],
       ),

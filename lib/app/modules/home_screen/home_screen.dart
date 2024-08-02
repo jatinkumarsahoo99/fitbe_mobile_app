@@ -78,8 +78,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
     Size size = MediaQuery.of(context).size;
     return PopScope(
       canPop: false,
-      onPopInvoked: (sta){
-        if(!sta){
+      onPopInvoked: (sta) {
+        if (!sta) {
           backHomeScreen();
         }
       },
@@ -145,15 +145,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
                                     const SizedBox(width: 5.0),
                                     Text(
                                       Utils.getGreeting(),
-                                      style:
-                                          TextStyles(context).googleRubikFontsForHeading(fontSize: 12, fontWeight: FontWeight.w400),
+                                      style: TextStyles(context)
+                                          .googleRubikFontsForHeading(fontSize: 12, fontWeight: FontWeight.w400),
                                     ),
                                   ],
                                 ),
                                 // const SizedBox(height: 3.0),
                                 Text(
                                   context.read<ProfileProvider>().userDetails?.data?.fullName ?? '',
-                                  style: TextStyles(context).googleRubikFontsForHeading(fontSize: 20, fontWeight: FontWeight.w500),
+                                  style:
+                                      TextStyles(context).googleRubikFontsForHeading(fontSize: 20, fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -169,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: AssetImage('assets/images/man.jpg'),
+                                    image: NetworkImage('https://i.pngimg.me/thumb/f/720/c3f2c592f9.jpg'),
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -187,7 +188,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
                         children: [
                           Text(
                             "Caloric Data",
-                            style: TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600, fontSize: 18),
+                            style:
+                                TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600, fontSize: 18),
                           )
                         ],
                       ),
@@ -200,10 +202,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
                         children: [
                           Text(
                             "Daily Plan",
-                            style: TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600, fontSize: 18),
+                            style:
+                                TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600, fontSize: 18),
                           ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.pushNamed(context, "/dailyPlan");
                             },
                             child: Text(
@@ -250,7 +253,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
                         children: [
                           Text(
                             "Goal Statistics",
-                            style: TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600, fontSize: 18),
+                            style:
+                                TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600, fontSize: 18),
                           ),
                         ],
                       ),
@@ -266,7 +270,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
                         children: [
                           Text(
                             "Body Composition Analysis",
-                            style: TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600, fontSize: 18),
+                            style:
+                                TextStyles(context).googleRubikFontsForSecondaryText9(fontWeight: FontWeight.w600, fontSize: 18),
                           ),
                         ],
                       ),
@@ -280,7 +285,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver, Si
                           Text(
                             "Your BMI Is ",
                             textAlign: TextAlign.center,
-                            style: TextStyles(context).googleRubikFontsForSecondaryText(fontSize: 14, fontWeight: FontWeight.w400),
+                            style:
+                                TextStyles(context).googleRubikFontsForSecondaryText(fontSize: 14, fontWeight: FontWeight.w400),
                           ),
                           InkWell(
                             borderRadius: const BorderRadius.all(Radius.circular(8)),
