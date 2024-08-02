@@ -94,55 +94,53 @@ class _DailyPlanState extends State<DailyPlan> {
                 flex: 2,
                 child: Container(),
               ),
-              SizedBox(
-                child: ListView.builder(
-                    itemCount: lstDataForFooter.length,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SvgPicture.asset(
-                              "assets/images/${lstDataForFooter[index].icon}.svg",
-                              width: 35,
-                              height: 35,
-                            ),
-                            const SizedBox(
-                              width: 14,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
+              ListView.builder(
+                  itemCount: lstDataForFooter.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/images/${lstDataForFooter[index].icon}.svg",
+                            width: 35,
+                            height: 35,
+                          ),
+                          const SizedBox(
+                            width: 14,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: size.width * 0.76,
+                                child: Text(
+                                  lstDataForFooter[index].textHeader ?? "",
+                                  maxLines: 3,
+                                  style: TextStyles(context)
+                                      .googleRubikFontsForSecondaryText(fontSize: 12, fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              SizedBox(
                                   width: size.width * 0.76,
                                   child: Text(
-                                    lstDataForFooter[index].textHeader ?? "",
-                                    maxLines: 3,
+                                    lstDataForFooter[index].textDesc ?? "",
+                                    maxLines: 10,
                                     style: TextStyles(context)
-                                        .googleRubikFontsForSecondaryText(fontSize: 12, fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                SizedBox(
-                                    width: size.width * 0.76,
-                                    child: Text(
-                                      lstDataForFooter[index].textDesc ?? "",
-                                      maxLines: 10,
-                                      style: TextStyles(context)
-                                          .googleRubikFontsForSecondaryText(fontSize: 10, fontWeight: FontWeight.w400),
-                                    )),
-                              ],
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-              ),
+                                        .googleRubikFontsForSecondaryText(fontSize: 10, fontWeight: FontWeight.w400),
+                                  )),
+                            ],
+                          )
+                        ],
+                      ),
+                    );
+                  }),
               Expanded(
                 flex: 18,
                 child: Container(),

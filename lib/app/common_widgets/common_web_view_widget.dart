@@ -1,5 +1,5 @@
+import 'package:fitbe/app/common_widgets/pouring_hour_glass_refined.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class CommonWebViewWidget extends StatefulWidget {
@@ -27,7 +27,7 @@ class CommonWebViewWidget extends StatefulWidget {
 
 class _CommonWebViewWidgetState extends State<CommonWebViewWidget> {
   late String token;
-  late WebViewController controller = WebViewController();
+  late WebViewController? controller;
 
   @override
   void initState() {
@@ -35,8 +35,9 @@ class _CommonWebViewWidgetState extends State<CommonWebViewWidget> {
     super.initState();
   }
 
+  bool loadSTa = true;
   initialiseWebViewController() {
-    controller = controller
+    controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.white)
       ..setNavigationDelegate(
@@ -65,15 +66,22 @@ class _CommonWebViewWidgetState extends State<CommonWebViewWidget> {
       ..loadRequest(
           // requestFunction();
           Uri.parse(widget.webViewUrl));
-
-    setState(() {});
+    Future.delayed(const Duration(seconds: 3), () {
+      loadSTa = false;
+      setState(() {});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(child: WebViewWidget(controller: controller)),
-    );
+    return SafeArea(
+        child: (!loadSTa && controller != null)
+            ? WebViewWidget(controller: controller!)
+            : Center(
+                child: SpinKitPouringHourGlassRefined(
+                  color: Theme.of(context).primaryColor,size: 150,
+                ),
+              ));
   }
 
   @override

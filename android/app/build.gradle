@@ -62,10 +62,10 @@ android {
             proguardFiles getDefaultProguardFile(
                     'proguard-android-optimize.txt'),
                     'proguard-rules.pro'
-            ndk {
-                //noinspection ChromeOsAbiSupport
-                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64' // includes ARM SO files only, so no x86 SO file
-            }
+//            ndk {
+//                //noinspection ChromeOsAbiSupport
+//                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64' // includes ARM SO files only, so no x86 SO file
+//            }
         }
     }
 
@@ -88,11 +88,23 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             def formattedDate = new SimpleDateFormat("MM").format(new Date())
-            def outputFileName = "fitbe-${variant.flavorName}-${variant.buildType.name}-${formattedDate}.apk"
+            def abi = output.getFilter(com.android.build.OutputFile.ABI)
+            def abiSuffix = abi != null ? "-${abi}" : ""
+            def outputFileName = "fitbe-${variant.flavorName}-${variant.buildType.name}-${formattedDate}-${abiSuffix}.apk"
             println "Setting output file name: $outputFileName"
             output.outputFileName = outputFileName
         }
     }
+
+    // Ensure that APKs are split per ABI
+//    splits {
+//        abi {
+//            enable true
+//            reset()
+//            include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+//            universalApk false
+//        }
+//    }
 
 }
 
