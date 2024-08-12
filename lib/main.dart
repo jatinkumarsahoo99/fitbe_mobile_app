@@ -10,6 +10,7 @@ import 'app/modules/splash_screen/splash_screen.dart';
 
 import 'flavors/env.dart' as env;
 
+
 void main() {
   // runApp(const MyApp());
 
