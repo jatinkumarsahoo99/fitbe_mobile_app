@@ -17,6 +17,8 @@ void main() {
   ));
 
   runApp(const MyApp());
+
+
   configLoading();
 }
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
